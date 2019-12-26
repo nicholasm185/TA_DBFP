@@ -29,7 +29,7 @@ public class Database {
             conn = connect();
             ResultSet rs = conn.createStatement().executeQuery(sql);
             while(rs.next()){
-                System.out.println(rs.getString("ProductName"));
+                System.out.println(rs.getString("ProductPrice"));
             }
             conn.close();
         } catch (SQLException e) {
