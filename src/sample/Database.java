@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class Database {
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    static final String DB_URL = "jdbc:mysql://dbta.1ez.xyz/9_FoodHallDB";
+    static final String DB_URL = "jdbc:mysql://dbta.1ez.xyz/9_FoodHallDB?useSSL=false";
     static final String USER = "NIC8761";
     static final String PASS = "tdda2nit";
     static Connection conn;
