@@ -40,6 +40,22 @@ public class Database {
 
     }
 
+    public static void updateBill(int billID, int cashierID, int storeID){
+
+        String sql = "UPDATE bill set cashierID = '%d', storeID = '%d' where billID = '%d'";
+
+        try {
+            conn = connect();
+            stmt = conn.createStatement();
+            sql = String.format(sql, cashierID, storeID, billID);
+            stmt.execute(sql);
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 //    payment related functions
     public static void newPayment(int billID, int amount){
 
@@ -49,6 +65,22 @@ public class Database {
             conn = connect();
             stmt = conn.createStatement();
             sql = String.format(sql, billID, amount);
+            stmt.execute(sql);
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public static void updatePayment(int paymentID, int billID, int amount){
+
+        String sql = "UPDATE payment set billID = '%d', amount = '%d' where paymentID = '%d'";
+
+        try {
+            conn = connect();
+            stmt = conn.createStatement();
+            sql = String.format(sql, billID, amount, paymentID);
             stmt.execute(sql);
             conn.close();
         } catch (SQLException e) {
@@ -72,6 +104,22 @@ public class Database {
             e.printStackTrace();
         }
 
+
+    }
+
+    public static void updateItemTransaction(int transactionID, int billID, int productID, int qty){
+
+        String sql = "UPDATE itemTransaction set billID = '%d', productID = '%d', qty where transactionID = '%d'";
+
+        try {
+            conn = connect();
+            stmt = conn.createStatement();
+            sql = String.format(sql, billID, productID, qty, transactionID);
+            stmt.execute(sql);
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
 
