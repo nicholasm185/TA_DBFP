@@ -9,10 +9,9 @@ public class Database {
     static final String DB_URL = "jdbc:mysql://localhost/FoodHallDB";
     static final String USER = "root";
     static final String PASS = "";
-//    static final String DB_URL = "jdbc:mysql://dbta.1ez.xyz/9_FoodHallDB?useSSL=false";
-//    static final String USER = "NIC8761";
-//    static final String PASS = "tdda2nit";
     static Connection conn;
+    static Statement stmt;
+    static ResultSet rs;
 
     public static Connection connect(){
         try {
@@ -24,20 +23,67 @@ public class Database {
         }
     }
 
-    public static void newOrder(int paymentType){
+//    bill related functions
+    public static void newBill(int cashierID, int storeID){
 
-        conn = connect()
+        String sql = "INSERT INTO bill (cashierID, storeID) values ('%d', '%d')";
+
+        try {
+            conn = connect();
+            stmt = conn.createStatement();
+            sql = String.format(sql, cashierID, storeID);
+            stmt.execute(sql);
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+//    payment related functions
+    public static void newPayment(int billID, int amount){
+
+        String sql = "INSERT INTO payment (billID, amount) values ('%d', '%d')";
+
+        try {
+            conn = connect();
+            stmt = conn.createStatement();
+            sql = String.format(sql, billID, amount);
+            stmt.execute(sql);
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+//    itemTransaction related functions
+    public static void newItemTransaction(int billID, int productID, int qty){
+
+        String sql = "INSERT INTO itemTransaction (billID, productID, qty) VALUES ( '%d', '%d', '%d')";
+
+        try {
+            conn = connect();
+            stmt = conn.createStatement();
+            sql = String.format(sql, billID, productID, qty);
+            stmt.execute(sql);
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
     }
 
     public static void testconnect(){
 
-        String sql = "Select * from Products";
+        String sql = "Select * from itemTransaction";
 
         try {
             conn = connect();
-            ResultSet rs = conn.createStatement().executeQuery(sql);
+            rs = conn.createStatement().executeQuery(sql);
             while(rs.next()){
-                System.out.println(rs.getString("ProductPrice"));
+                System.out.println(rs.getString("transactionID"));
             }
             conn.close();
         } catch (SQLException e) {
