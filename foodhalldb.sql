@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 28, 2019 at 08:34 AM
+-- Generation Time: Dec 29, 2019 at 05:11 AM
 -- Server version: 10.1.39-MariaDB
 -- PHP Version: 7.3.5
 
@@ -41,7 +41,9 @@ CREATE TABLE `bill` (
 
 INSERT INTO `bill` (`billID`, `transactionTime`, `cashierID`, `storeID`) VALUES
 (1, '2019-12-28 14:09:13', 1, 3),
-(2, '2019-12-28 14:09:13', 4, 1);
+(2, '2019-12-28 14:09:13', 4, 1),
+(3, '2019-12-28 14:50:42', 3, 1),
+(4, '2019-12-28 15:05:23', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -51,18 +53,20 @@ INSERT INTO `bill` (`billID`, `transactionTime`, `cashierID`, `storeID`) VALUES
 
 CREATE TABLE `cashier` (
   `cashierID` int(3) UNSIGNED NOT NULL,
-  `cashierName` varchar(20) NOT NULL
+  `cashierName` varchar(20) NOT NULL,
+  `password` varchar(6) DEFAULT NULL,
+  `admin` tinyint(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `cashier`
 --
 
-INSERT INTO `cashier` (`cashierID`, `cashierName`) VALUES
-(1, 'Erick'),
-(2, 'John'),
-(3, 'Dan'),
-(4, 'Fatimah');
+INSERT INTO `cashier` (`cashierID`, `cashierName`, `password`, `admin`) VALUES
+(1, 'Erick', 'eri123', 0),
+(2, 'John', 'joh123', 0),
+(3, 'Dan', 'dan123', 0),
+(4, 'Fatimah', 'fat123', 1);
 
 -- --------------------------------------------------------
 
@@ -85,7 +89,8 @@ INSERT INTO `itemtransaction` (`transactionID`, `billID`, `productID`, `qty`) VA
 (1, 1, 5, 1),
 (2, 1, 3, 1),
 (3, 2, 2, 1),
-(4, 2, 3, 1);
+(4, 2, 3, 1),
+(5, 3, 3, 1);
 
 -- --------------------------------------------------------
 
@@ -235,7 +240,7 @@ ALTER TABLE `store`
 -- AUTO_INCREMENT for table `bill`
 --
 ALTER TABLE `bill`
-  MODIFY `billID` int(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `billID` int(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `cashier`
@@ -247,7 +252,7 @@ ALTER TABLE `cashier`
 -- AUTO_INCREMENT for table `itemtransaction`
 --
 ALTER TABLE `itemtransaction`
-  MODIFY `transactionID` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `transactionID` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `payment`
