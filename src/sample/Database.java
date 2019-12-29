@@ -23,6 +23,36 @@ public class Database {
         }
     }
 
+//    login function
+    public static int login(String username, String password){
+        if(!username.isEmpty() && !password.isEmpty()) {
+            String sql = "SELECT * FROM cashier WHERE cashierName = '%s' AND password = '%s'";
+
+            try {
+                conn = connect();
+                sql = String.format(sql, username, password);
+                rs = conn.createStatement().executeQuery(sql);
+
+                if (rs.next()) {
+                    if(rs.getInt("admin") == 0){
+                        return 1;
+                    } else if(rs.getInt("admin") == 1){
+                        return 2;
+                    }
+
+                } else {
+                    return 0;
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return 0;
+            }
+        } else{
+            return 0;
+        }
+        return 0;
+    }
+
 //    bill related functions
     public static void newBill(int cashierID, int storeID){
 

@@ -7,11 +7,11 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="311.0" prefWidth="489.0" xmlns="http://javafx.com/javafx/8.0.999-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="311.0" prefWidth="489.0" xmlns="http://javafx.com/javafx/8.0.999-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.LoginController">
    <children>
-      <Button layoutX="328.0" layoutY="211.0" mnemonicParsing="false" prefWidth="64.0" text="Login" />
+      <Button layoutX="328.0" layoutY="211.0" mnemonicParsing="false" onAction="#loginButtonClicked" prefWidth="64.0" text="Login" />
       <PasswordField fx:id="passField" layoutX="96.0" layoutY="211.0" />
-      <TextField fx:id="usrnmField" layoutX="96.0" layoutY="132.0" />
+      <TextField fx:id="uField" layoutX="96.0" layoutY="132.0" />
       <Label alignment="CENTER" layoutX="152.0" layoutY="29.0" prefHeight="47.0" prefWidth="185.0" text="Please Login" textAlignment="CENTER">
          <font>
             <Font name="Arial Black" size="22.0" />
