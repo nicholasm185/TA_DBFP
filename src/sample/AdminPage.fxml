@@ -15,25 +15,26 @@
          <font>
             <Font name="Arial Black" size="21.0" />
          </font></Label>
-      <TableView layoutX="38.0" layoutY="124.0" prefHeight="335.0" prefWidth="552.0">
+      <TableView fx:id="BillTable" layoutX="38.0" layoutY="124.0" prefHeight="335.0" prefWidth="608.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="Bill ID" />
-          <TableColumn prefWidth="149.0" text="Transaction Time" />
-            <TableColumn prefWidth="139.0" text="Cashier Name" />
-            <TableColumn prefWidth="188.0" text="Store Name" />
+          <TableColumn fx:id="BillIDCol" prefWidth="66.0" text="Bill ID" />
+          <TableColumn fx:id="TTCol" prefWidth="158.0" text="Transaction Time" />
+            <TableColumn fx:id="CashierNameCol" prefWidth="94.0" text="Cashier Name" />
+            <TableColumn fx:id="StrNameCol" prefWidth="171.0" text="Store Name" />
+            <TableColumn fx:id="PMCol" prefWidth="118.0" text="Payment Method" />
         </columns>
       </TableView>
-      <DatePicker layoutX="40.0" layoutY="529.0" />
-      <DatePicker layoutX="40.0" layoutY="590.0" />
-      <Button layoutX="241.0" layoutY="590.0" mnemonicParsing="false" text="Filter" />
+      <DatePicker fx:id="startDatePicker" layoutX="40.0" layoutY="529.0" />
+      <DatePicker fx:id="endDatePicker" layoutX="40.0" layoutY="590.0" />
+      <Button layoutX="305.0" layoutY="590.0" mnemonicParsing="false" onAction="#refreshBillList" prefHeight="25.0" prefWidth="150.0" text="Filter" />
       <Button layoutX="632.0" layoutY="519.0" mnemonicParsing="false" prefHeight="61.0" prefWidth="261.0" text="Manage Cashiers" />
-      <Button layoutX="632.0" layoutY="160.0" mnemonicParsing="false" prefHeight="61.0" prefWidth="261.0" text="See Items Transaction" />
-      <Button layoutX="632.0" layoutY="261.0" mnemonicParsing="false" prefHeight="61.0" prefWidth="261.0" text="Delete Bill" />
-      <Button layoutX="632.0" layoutY="368.0" mnemonicParsing="false" prefHeight="61.0" prefWidth="261.0" text="Edit Bill" />
+      <Button layoutX="675.0" layoutY="160.0" mnemonicParsing="false" onAction="#seeItemsTransactionButtonClicked" prefHeight="61.0" prefWidth="218.0" text="See Items Transaction" />
+      <Button layoutX="675.0" layoutY="261.0" mnemonicParsing="false" prefHeight="61.0" prefWidth="218.0" text="Delete Bill" />
+      <Button layoutX="675.0" layoutY="368.0" mnemonicParsing="false" prefHeight="61.0" prefWidth="218.0" text="Edit Bill" />
       <Label layoutX="38.0" layoutY="484.0" text="Filter by Date" />
       <Label layoutX="40.0" layoutY="512.0" text="Start date" />
       <Label layoutX="40.0" layoutY="564.0" text="End date" />
-      <ComboBox layoutX="305.0" layoutY="529.0" prefWidth="150.0" />
+      <ComboBox fx:id="StoreCombo" layoutX="305.0" layoutY="529.0" prefWidth="150.0" />
       <Label layoutX="305.0" layoutY="493.0" text="Filter by Store" />
    </children>
 </AnchorPane>

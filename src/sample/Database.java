@@ -23,6 +23,20 @@ public class Database {
         }
     }
 
+    public static boolean executeSQL(String sql){
+        try {
+            conn = connect();
+            stmt = conn.createStatement();
+            boolean result = stmt.execute(sql);
+            conn.close();
+            return result;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
 //    login function
     public static int login(String username, String password){
         if(!username.isEmpty() && !password.isEmpty()) {
@@ -54,14 +68,14 @@ public class Database {
     }
 
 //    bill related functions
-    public static void newBill(int cashierID, int storeID){
+    public static void newBill(int cashierID, int storeID, int paymentTypeID){
 
-        String sql = "INSERT INTO bill (cashierID, storeID) values ('%d', '%d')";
+        String sql = "INSERT INTO bill (cashierID, storeID, paymentTypeID) values ('%d', '%d', '%d')";
 
         try {
             conn = connect();
             stmt = conn.createStatement();
-            sql = String.format(sql, cashierID, storeID);
+            sql = String.format(sql, cashierID, storeID, paymentTypeID);
             stmt.execute(sql);
             conn.close();
         } catch (SQLException e) {
@@ -70,87 +84,108 @@ public class Database {
 
     }
 
-    public static void updateBill(int billID, int cashierID, int storeID){
+    public static void updateBill(int billID, int cashierID, int storeID, int paymentTypeID){
 
-        String sql = "UPDATE bill set cashierID = '%d', storeID = '%d' where billID = '%d'";
+        String sql = "UPDATE bill set cashierID = '%d', storeID = '%d', paymentTypeID = '%d' where billID = '%d'";
+        sql = String.format(sql, cashierID, storeID, paymentTypeID, billID);
 
-        try {
-            conn = connect();
-            stmt = conn.createStatement();
-            sql = String.format(sql, cashierID, storeID, billID);
-            stmt.execute(sql);
-            conn.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        executeSQL(sql);
 
     }
 
-//    payment related functions
-    public static void newPayment(int billID, int amount){
+    public static ResultSet selectAllBill(String startDate, String endDate){
 
-        String sql = "INSERT INTO payment (billID, amount) values ('%d', '%d')";
+        String sql = "SELECT b.billID, b.transactionTime, c.cashierName, s.storeName, p.paymentName FROM bill b " +
+                "INNER JOIN cashier c on b.cashierID = c.cashierID " +
+                "INNER JOIN store s on b.storeID = s.StoreID " +
+                "INNER JOIN paymenttype p ON b.paymentTypeID = p.paymentTypeID " +
+                "WHERE b.transactionTime BETWEEN \'" + startDate + "\' and \'" + endDate +"\'";
 
-        try {
+        try{
             conn = connect();
-            stmt = conn.createStatement();
-            sql = String.format(sql, billID, amount);
-            stmt.execute(sql);
-            conn.close();
+            rs = conn.createStatement().executeQuery(sql);
+
         } catch (SQLException e) {
             e.printStackTrace();
+            return null;
         }
+
+        return rs;
 
     }
 
-    public static void updatePayment(int paymentID, int billID, int amount){
+    public static ResultSet selectBillFromStore(String startDate, String endDate, String storeName){
 
-        String sql = "UPDATE payment set billID = '%d', amount = '%d' where paymentID = '%d'";
+        String sql = "SELECT b.billID, b.transactionTime, c.cashierName, s.storeName, p.paymentName FROM bill b " +
+                "INNER JOIN cashier c on b.cashierID = c.cashierID " +
+                "INNER JOIN store s on b.storeID = s.StoreID " +
+                "INNER JOIN paymenttype p ON b.paymentTypeID = p.paymentTypeID " +
+                "WHERE b.transactionTime BETWEEN \'" + startDate + "\' and \'" + endDate +"\' AND s.StoreName = \'" + storeName + "\'";
 
-        try {
+        try{
             conn = connect();
-            stmt = conn.createStatement();
-            sql = String.format(sql, billID, amount, paymentID);
-            stmt.execute(sql);
-            conn.close();
+            rs = conn.createStatement().executeQuery(sql);
+
         } catch (SQLException e) {
             e.printStackTrace();
+            return null;
         }
 
+        return rs;
     }
 
 //    itemTransaction related functions
     public static void newItemTransaction(int billID, int productID, int qty){
 
         String sql = "INSERT INTO itemTransaction (billID, productID, qty) VALUES ( '%d', '%d', '%d')";
+        sql = String.format(sql, billID, productID, qty);
 
-        try {
-            conn = connect();
-            stmt = conn.createStatement();
-            sql = String.format(sql, billID, productID, qty);
-            stmt.execute(sql);
-            conn.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
+        executeSQL(sql);
 
     }
 
     public static void updateItemTransaction(int transactionID, int billID, int productID, int qty){
 
         String sql = "UPDATE itemTransaction set billID = '%d', productID = '%d', qty where transactionID = '%d'";
+        sql = String.format(sql, billID, productID, qty, transactionID);
 
+        executeSQL(sql);
+
+    }
+
+    public static ResultSet getItemTransaction(int billID){
+
+        String sql = "SELECT t.transactionID, t.qty, p.productName, p.productPrice FROM itemtransaction t INNER JOIN products p ON t.productID = p.productID WHERE billID = '%d'";
+        sql = String.format(sql, billID);
+
+        try{
+            conn = connect();
+            rs = conn.createStatement().executeQuery(sql);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        return rs;
+
+    }
+
+//    store related fucntions
+    public static ArrayList<String> getAllStores() throws NullPointerException {
+        ArrayList<String> listofTypes = new ArrayList<>();
         try {
             conn = connect();
-            stmt = conn.createStatement();
-            sql = String.format(sql, billID, productID, qty, transactionID);
-            stmt.execute(sql);
-            conn.close();
+            String sql = "SELECT StoreName FROM store";
+            ResultSet rs = conn.createStatement().executeQuery(sql);
+
+            while (rs.next()){
+                listofTypes.add(rs.getString("StoreName"));
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
+        return listofTypes;
     }
 
     public static void testconnect(){

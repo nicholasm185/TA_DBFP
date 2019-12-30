@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 29, 2019 at 05:11 AM
+-- Generation Time: Dec 30, 2019 at 03:35 AM
 -- Server version: 10.1.39-MariaDB
 -- PHP Version: 7.3.5
 
@@ -32,18 +32,19 @@ CREATE TABLE `bill` (
   `billID` int(20) UNSIGNED NOT NULL,
   `transactionTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `cashierID` int(3) UNSIGNED NOT NULL,
-  `storeID` int(3) UNSIGNED NOT NULL
+  `storeID` int(3) UNSIGNED NOT NULL,
+  `paymentTypeID` int(2) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `bill`
 --
 
-INSERT INTO `bill` (`billID`, `transactionTime`, `cashierID`, `storeID`) VALUES
-(1, '2019-12-28 14:09:13', 1, 3),
-(2, '2019-12-28 14:09:13', 4, 1),
-(3, '2019-12-28 14:50:42', 3, 1),
-(4, '2019-12-28 15:05:23', 1, 1);
+INSERT INTO `bill` (`billID`, `transactionTime`, `cashierID`, `storeID`, `paymentTypeID`) VALUES
+(1, '2019-12-28 14:09:13', 1, 3, 1),
+(2, '2019-12-28 14:09:13', 4, 1, 1),
+(3, '2019-12-28 14:50:42', 3, 1, 3),
+(4, '2019-12-28 15:05:23', 1, 1, 5);
 
 -- --------------------------------------------------------
 
@@ -91,26 +92,6 @@ INSERT INTO `itemtransaction` (`transactionID`, `billID`, `productID`, `qty`) VA
 (3, 2, 2, 1),
 (4, 2, 3, 1),
 (5, 3, 3, 1);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `payment`
---
-
-CREATE TABLE `payment` (
-  `paymentID` int(20) UNSIGNED NOT NULL,
-  `billID` int(20) UNSIGNED NOT NULL,
-  `amount` int(12) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `payment`
---
-
-INSERT INTO `payment` (`paymentID`, `billID`, `amount`) VALUES
-(1, 1, 100000),
-(2, 2, 50000);
 
 -- --------------------------------------------------------
 
@@ -191,7 +172,8 @@ INSERT INTO `store` (`StoreID`, `StoreName`, `StoreLocation`) VALUES
 ALTER TABLE `bill`
   ADD PRIMARY KEY (`billID`),
   ADD KEY `bill_ibfk_1` (`cashierID`),
-  ADD KEY `bill_ibfk_2` (`storeID`);
+  ADD KEY `bill_ibfk_2` (`storeID`),
+  ADD KEY `paymentTypeID` (`paymentTypeID`);
 
 --
 -- Indexes for table `cashier`
@@ -206,13 +188,6 @@ ALTER TABLE `itemtransaction`
   ADD PRIMARY KEY (`transactionID`),
   ADD KEY `billID` (`billID`),
   ADD KEY `productID` (`productID`);
-
---
--- Indexes for table `payment`
---
-ALTER TABLE `payment`
-  ADD PRIMARY KEY (`paymentID`),
-  ADD KEY `billID` (`billID`);
 
 --
 -- Indexes for table `paymenttype`
@@ -255,12 +230,6 @@ ALTER TABLE `itemtransaction`
   MODIFY `transactionID` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT for table `payment`
---
-ALTER TABLE `payment`
-  MODIFY `paymentID` int(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
 -- AUTO_INCREMENT for table `paymenttype`
 --
 ALTER TABLE `paymenttype`
@@ -287,7 +256,8 @@ ALTER TABLE `store`
 --
 ALTER TABLE `bill`
   ADD CONSTRAINT `bill_ibfk_1` FOREIGN KEY (`cashierID`) REFERENCES `cashier` (`cashierID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `bill_ibfk_2` FOREIGN KEY (`storeID`) REFERENCES `store` (`StoreID`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `bill_ibfk_2` FOREIGN KEY (`storeID`) REFERENCES `store` (`StoreID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `bill_ibfk_3` FOREIGN KEY (`paymentTypeID`) REFERENCES `paymenttype` (`paymentTypeID`) ON DELETE SET NULL ON UPDATE SET NULL;
 
 --
 -- Constraints for table `itemtransaction`
@@ -295,12 +265,6 @@ ALTER TABLE `bill`
 ALTER TABLE `itemtransaction`
   ADD CONSTRAINT `itemtransaction_ibfk_1` FOREIGN KEY (`billID`) REFERENCES `bill` (`billID`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `itemtransaction_ibfk_2` FOREIGN KEY (`productID`) REFERENCES `products` (`productID`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `payment`
---
-ALTER TABLE `payment`
-  ADD CONSTRAINT `payment_ibfk_1` FOREIGN KEY (`billID`) REFERENCES `bill` (`billID`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
