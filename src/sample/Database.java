@@ -253,6 +253,33 @@ public class Database {
 
     }
 
+    public static void addCashier(String name, String pass, int admin){
+
+        String sql = "INSERT INTO cashier (cashierName, password, admin) VALUES ('%s','%s','%d')";
+        sql = String.format(sql, name, pass, admin);
+
+        executeSQL(sql);
+
+    }
+
+    public static void deleteCashier(int cashierID){
+
+        String sql = "DELETE FROM cashier WHERE cashierID = '%d'";
+        sql = String.format(sql, cashierID);
+
+        executeSQL(sql);
+
+    }
+
+    public static void updateCashier(int cashierID, String cashierName, String cashierPass, int admin){
+
+        String sql = "UPDATE cashier SET cashierName = '%s', password = '%s', admin = '%d' WHERE cashierID = '%d'";
+        sql = String.format(sql, cashierName, cashierPass, admin, cashierID);
+
+        executeSQL(sql);
+
+    }
+
 //    payment related functions
 
     public static ArrayList<String> getPaymentMethods(){

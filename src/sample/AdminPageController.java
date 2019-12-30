@@ -66,7 +66,7 @@ public class AdminPageController implements Initializable {
         if(storename.isEmpty()) {
             rs = Database.selectAllBill(startDate,endDate);
         } else{
-            rs = Database.selectBillFromStore(startDate,endDate,storename);
+            rs = Database.selectBillFromStore(startDate,endDate,storename.substring(2));
         }
 
         try {
@@ -174,8 +174,6 @@ public class AdminPageController implements Initializable {
             Parent ManageCashierParent = loader.load();
 
             Stage stage = new Stage(); // New stage (window)
-
-            ManageCashierController controller = loader.getController();
 
             // Setting the stage up
             stage.initModality(Modality.APPLICATION_MODAL);

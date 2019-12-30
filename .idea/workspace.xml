@@ -2,15 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/sample/ManageCashierController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/sample/ManageCashierPage.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/sample/EditCashierController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/sample/EditCashierPage.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/sample/NewCashierController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/sample/NewCashierPage.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TA_DBFP/sample/AdminPage.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TA_DBFP/sample/AdminPage.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/TA_DBFP/sample/Database.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TA_DBFP/sample/Database.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/AdminPage.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/AdminPage.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TA_DBFP/sample/ManageCashierPage.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TA_DBFP/sample/ManageCashierPage.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/sample/AdminPageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/AdminPageController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/Cashier.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Cashier.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/sample/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Database.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/ItemsTransactionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/ItemsTransactionController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/ManageCashierController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/ManageCashierController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/ManageCashierPage.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/ManageCashierPage.fxml" afterDir="false" />
     </list>
     <ignored path="JavaFxApplication.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -73,20 +76,10 @@
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/sample/AdminPage.fxml">
-              <provider editor-type-id="text-editor">
-                <state relative-caret-position="286">
-                  <caret line="22" column="42" selection-start-line="22" selection-start-column="42" selection-end-line="22" selection-end-column="42" />
-                </state>
-              </provider>
-              <provider selected="true" editor-type-id="JavaFX-Scene-Builder" />
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/sample/AdminPageController.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="364">
-                  <caret line="173" column="48" selection-start-line="173" selection-start-column="48" selection-end-line="173" selection-end-column="48" />
+                <state relative-caret-position="230">
+                  <caret line="108" column="58" lean-forward="true" selection-start-line="108" selection-start-column="58" selection-end-line="108" selection-end-column="58" />
                   <folding>
                     <element signature="imports" expanded="true" />
                   </folding>
@@ -95,26 +88,22 @@
             </entry>
           </file>
           <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/sample/Cashier.java">
+            <entry file="file://$PROJECT_DIR$/src/sample/ItemsTransaction.fxml">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="208">
-                  <caret line="16" column="31" selection-start-line="16" selection-start-column="31" selection-end-line="16" selection-end-column="31" />
+                <state relative-caret-position="247">
+                  <caret line="19" column="91" selection-start-line="19" selection-start-column="91" selection-end-line="19" selection-end-column="91" />
+                </state>
+              </provider>
+              <provider editor-type-id="JavaFX-Scene-Builder" />
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/sample/ItemsTransactionController.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="949">
+                  <caret line="73" column="46" selection-start-line="73" selection-start-column="46" selection-end-line="73" selection-end-column="46" />
                   <folding>
-                    <element signature="e#486#487#0" expanded="true" />
-                    <element signature="e#533#534#0" expanded="true" />
-                    <element signature="e#575#576#0" expanded="true" />
-                    <element signature="e#613#614#0" expanded="true" />
-                    <element signature="e#647#648#0" expanded="true" />
-                    <element signature="e#701#702#0" expanded="true" />
-                    <element signature="e#747#748#0" expanded="true" />
-                    <element signature="e#785#786#0" expanded="true" />
-                    <element signature="e#819#820#0" expanded="true" />
-                    <element signature="e#873#874#0" expanded="true" />
-                    <element signature="e#919#920#0" expanded="true" />
-                    <element signature="e#957#958#0" expanded="true" />
-                    <element signature="e#991#992#0" expanded="true" />
-                    <element signature="e#1045#1046#0" expanded="true" />
-                    <element signature="e#1091#1092#0" expanded="true" />
+                    <element signature="imports" expanded="true" />
                   </folding>
                 </state>
               </provider>
@@ -124,17 +113,39 @@
             <entry file="file://$PROJECT_DIR$/src/sample/ManageCashierPage.fxml">
               <provider editor-type-id="text-editor">
                 <state relative-caret-position="117">
-                  <caret line="23" column="14" selection-start-line="23" selection-start-column="14" selection-end-line="23" selection-end-column="14" />
+                  <caret line="27" column="14" selection-start-line="27" selection-start-column="14" selection-end-line="27" selection-end-column="14" />
                 </state>
               </provider>
               <provider selected="true" editor-type-id="JavaFX-Scene-Builder" />
             </entry>
           </file>
           <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/sample/EditCashierPage.fxml">
+              <provider editor-type-id="text-editor">
+                <state relative-caret-position="117">
+                  <caret line="9" column="172" selection-start-line="9" selection-start-column="172" selection-end-line="9" selection-end-column="172" />
+                </state>
+              </provider>
+              <provider selected="true" editor-type-id="JavaFX-Scene-Builder" />
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/sample/EditCashierController.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="521">
+                  <caret line="50" column="35" lean-forward="true" selection-start-line="50" selection-start-column="35" selection-end-line="50" selection-end-column="35" />
+                  <folding>
+                    <element signature="imports" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/sample/ManageCashierController.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="494">
-                  <caret line="38" column="53" lean-forward="true" selection-start-line="38" selection-start-column="53" selection-end-line="38" selection-end-column="53" />
+                <state relative-caret-position="209">
+                  <caret line="83" lean-forward="true" selection-start-line="83" selection-end-line="83" />
                   <folding>
                     <element signature="imports" expanded="true" />
                   </folding>
@@ -143,39 +154,33 @@
             </entry>
           </file>
           <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/sample/ActualBill.java">
+            <entry file="file://$PROJECT_DIR$/src/sample/NewCashierPage.fxml">
+              <provider editor-type-id="text-editor">
+                <state relative-caret-position="117">
+                  <caret line="35" column="14" selection-start-line="35" selection-start-column="14" selection-end-line="35" selection-end-column="14" />
+                </state>
+              </provider>
+              <provider selected="true" editor-type-id="JavaFX-Scene-Builder" />
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/sample/NewCashierController.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="234">
-                  <caret line="18" column="28" selection-start-line="18" selection-start-column="28" selection-end-line="18" selection-end-column="28" />
+                <state relative-caret-position="404">
+                  <caret line="33" column="42" selection-start-line="33" selection-start-column="16" selection-end-line="33" selection-end-column="42" />
                   <folding>
-                    <element signature="e#548#549#0" expanded="true" />
-                    <element signature="e#589#590#0" expanded="true" />
-                    <element signature="e#625#626#0" expanded="true" />
-                    <element signature="e#667#668#0" expanded="true" />
-                    <element signature="e#705#706#0" expanded="true" />
-                    <element signature="e#767#768#0" expanded="true" />
-                    <element signature="e#821#822#0" expanded="true" />
-                    <element signature="e#854#855#0" expanded="true" />
-                    <element signature="e#886#887#0" expanded="true" />
-                    <element signature="e#933#934#0" expanded="true" />
-                    <element signature="e#975#976#0" expanded="true" />
-                    <element signature="e#1006#1007#0" expanded="true" />
-                    <element signature="e#1036#1037#0" expanded="true" />
-                    <element signature="e#1079#1080#0" expanded="true" />
-                    <element signature="e#1117#1118#0" expanded="true" />
-                    <element signature="e#1154#1155#0" expanded="true" />
-                    <element signature="e#1190#1191#0" expanded="true" />
-                    <element signature="e#1245#1246#0" expanded="true" />
-                    <element signature="e#1295#1296#0" expanded="true" />
+                    <element signature="imports" expanded="true" />
+                    <element signature="e#387#388#0" expanded="true" />
+                    <element signature="e#437#438#0" expanded="true" />
                   </folding>
                 </state>
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="true">
+          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/sample/Database.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="399">
+                <state relative-caret-position="2990">
                   <caret line="230" column="75" selection-start-line="230" selection-start-column="75" selection-end-line="230" selection-end-column="75" />
                   <folding>
                     <element signature="imports" expanded="true" />
@@ -189,37 +194,34 @@
       <split-second>
         <leaf>
           <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/sample/Cashier.java">
+            <entry file="file://$PROJECT_DIR$/src/sample/Database.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="91">
-                  <caret line="7" column="30" selection-start-line="7" selection-start-column="19" selection-end-line="7" selection-end-column="30" />
+                <state relative-caret-position="351">
+                  <caret line="278" column="24" selection-start-line="278" selection-start-column="24" selection-end-line="278" selection-end-column="24" />
                   <folding>
-                    <element signature="e#454#455#0" expanded="true" />
-                    <element signature="e#486#487#0" expanded="true" />
-                    <element signature="e#533#534#0" expanded="true" />
-                    <element signature="e#575#576#0" expanded="true" />
-                    <element signature="e#613#614#0" expanded="true" />
-                    <element signature="e#647#648#0" expanded="true" />
-                    <element signature="e#701#702#0" expanded="true" />
-                    <element signature="e#747#748#0" expanded="true" />
-                    <element signature="e#785#786#0" expanded="true" />
-                    <element signature="e#819#820#0" expanded="true" />
-                    <element signature="e#873#874#0" expanded="true" />
-                    <element signature="e#919#920#0" expanded="true" />
-                    <element signature="e#957#958#0" expanded="true" />
-                    <element signature="e#991#992#0" expanded="true" />
-                    <element signature="e#1045#1046#0" expanded="true" />
-                    <element signature="e#1091#1092#0" expanded="true" />
+                    <element signature="imports" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/sample/AdminPageController.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="219">
+                  <caret line="114" column="16" selection-start-line="114" selection-start-column="12" selection-end-line="114" selection-end-column="16" />
+                  <folding>
+                    <element signature="imports" expanded="true" />
                   </folding>
                 </state>
               </provider>
             </entry>
           </file>
           <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/src/sample/LoginController.java">
+            <entry file="file://$PROJECT_DIR$/src/sample/NewCashierController.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="378">
-                  <caret line="66" column="12" selection-start-line="66" selection-start-column="12" selection-end-line="67" selection-end-column="33" />
+                <state relative-caret-position="456">
+                  <caret line="39" column="9" lean-forward="true" selection-start-line="39" selection-start-column="9" selection-end-line="39" selection-end-column="9" />
                   <folding>
                     <element signature="imports" expanded="true" />
                   </folding>
@@ -242,6 +244,7 @@
   <component name="FindInProjectRecents">
     <findStrings>
       <find>paye</find>
+      <find>bill</find>
     </findStrings>
   </component>
   <component name="FindManager">
@@ -265,17 +268,21 @@
         <option value="$PROJECT_DIR$/src/sample/CashierPage.fxml" />
         <option value="$PROJECT_DIR$/src/sample/Bill.java" />
         <option value="$PROJECT_DIR$/src/sample/Item.java" />
-        <option value="$PROJECT_DIR$/src/sample/ItemsTransactionController.java" />
         <option value="$PROJECT_DIR$/src/sample/ItemsTransaction.fxml" />
         <option value="$PROJECT_DIR$/src/sample/ActualBill.java" />
         <option value="$PROJECT_DIR$/src/sample/EditBillPage.fxml" />
         <option value="$PROJECT_DIR$/src/sample/EditBillPageController.java" />
         <option value="$PROJECT_DIR$/src/sample/Cashier.java" />
-        <option value="$PROJECT_DIR$/src/sample/ManageCashierPage.fxml" />
         <option value="$PROJECT_DIR$/src/sample/AdminPage.fxml" />
-        <option value="$PROJECT_DIR$/src/sample/ManageCashierController.java" />
+        <option value="$PROJECT_DIR$/src/sample/NewCashierController.java" />
+        <option value="$PROJECT_DIR$/src/sample/NewCashierPage.fxml" />
         <option value="$PROJECT_DIR$/src/sample/AdminPageController.java" />
+        <option value="$PROJECT_DIR$/src/sample/ItemsTransactionController.java" />
         <option value="$PROJECT_DIR$/src/sample/Database.java" />
+        <option value="$PROJECT_DIR$/src/sample/EditCashierPage.fxml" />
+        <option value="$PROJECT_DIR$/src/sample/EditCashierController.java" />
+        <option value="$PROJECT_DIR$/src/sample/ManageCashierController.java" />
+        <option value="$PROJECT_DIR$/src/sample/ManageCashierPage.fxml" />
       </list>
     </option>
   </component>
@@ -339,7 +346,7 @@
     <property name="aspect.path.notification.shown" value="true" />
     <property name="dynamic.classpath" value="false" />
     <property name="extract.method.default.visibility" value="public" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/lib/controlsfx-8.40.16/controlsfx-8.40.16.jar!/" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/sample" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -353,6 +360,9 @@
     <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Nicholas\OneDrive\Assignments\TA_DBFP\src\sample" />
+    </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="sample" />
     </key>
@@ -461,18 +471,18 @@
       <workItem from="1577511635105" duration="6097000" />
       <workItem from="1577627352899" duration="987000" />
       <workItem from="1577628435813" duration="3870000" />
-      <workItem from="1577673294007" duration="23839000" />
+      <workItem from="1577673294007" duration="28315000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="39719000" />
+    <option name="totallyTimeSpent" value="44195000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1066" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.6703755" visible="true" weight="0.117803834" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.6703755" visible="true" weight="0.117803834" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="Favorites" order="2" />
       <window_info id="Designer" order="3" />
@@ -481,7 +491,7 @@
       <window_info id="UI Designer" order="6" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.20900321" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.20900321" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -660,24 +670,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/sample/ItemsTransaction.fxml">
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="26" column="14" selection-start-line="26" selection-start-column="14" selection-end-line="26" selection-end-column="14" />
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="JavaFX-Scene-Builder" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/sample/ItemsTransactionController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="556">
-          <caret line="74" column="8" selection-start-line="74" selection-start-column="8" selection-end-line="75" selection-end-column="22" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/sample/ActualBill.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="234">
@@ -706,6 +698,24 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/sample/EditBillPage.fxml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="182">
+          <caret line="14" column="16" lean-forward="true" selection-start-line="14" selection-start-column="16" selection-end-line="14" selection-end-column="16" />
+        </state>
+      </provider>
+      <provider editor-type-id="JavaFX-Scene-Builder" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/sample/EditBillPageController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="378">
+          <caret line="80" column="54" selection-start-line="80" selection-start-column="54" selection-end-line="80" selection-end-column="54" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/sample/Cashier.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="208">
@@ -730,34 +740,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/sample/LoginController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="66" column="12" selection-start-line="66" selection-start-column="12" selection-end-line="67" selection-end-column="33" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/sample/EditBillPage.fxml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="182">
-          <caret line="14" column="16" lean-forward="true" selection-start-line="14" selection-start-column="16" selection-end-line="14" selection-end-column="16" />
-        </state>
-      </provider>
-      <provider editor-type-id="JavaFX-Scene-Builder" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/sample/EditBillPageController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="80" column="54" selection-start-line="80" selection-start-column="54" selection-end-line="80" selection-end-column="54" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/sample/AdminPage.fxml">
       <provider editor-type-id="text-editor">
         <state relative-caret-position="286">
@@ -766,18 +748,36 @@
       </provider>
       <provider selected="true" editor-type-id="JavaFX-Scene-Builder" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/sample/ManageCashierPage.fxml">
+    <entry file="file://$PROJECT_DIR$/src/sample/LoginController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="66" column="12" selection-start-line="66" selection-start-column="12" selection-end-line="67" selection-end-column="33" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/sample/NewCashierPage.fxml">
       <provider editor-type-id="text-editor">
         <state relative-caret-position="117">
-          <caret line="23" column="14" selection-start-line="23" selection-start-column="14" selection-end-line="23" selection-end-column="14" />
+          <caret line="35" column="14" selection-start-line="35" selection-start-column="14" selection-end-line="35" selection-end-column="14" />
         </state>
       </provider>
       <provider selected="true" editor-type-id="JavaFX-Scene-Builder" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/sample/ManageCashierController.java">
+    <entry file="file://$PROJECT_DIR$/src/sample/ItemsTransaction.fxml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="494">
-          <caret line="38" column="53" lean-forward="true" selection-start-line="38" selection-start-column="53" selection-end-line="38" selection-end-column="53" />
+        <state relative-caret-position="247">
+          <caret line="19" column="91" selection-start-line="19" selection-start-column="91" selection-end-line="19" selection-end-column="91" />
+        </state>
+      </provider>
+      <provider editor-type-id="JavaFX-Scene-Builder" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/sample/ItemsTransactionController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="949">
+          <caret line="73" column="46" selection-start-line="73" selection-start-column="46" selection-end-line="73" selection-end-column="46" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -786,8 +786,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/sample/AdminPageController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="364">
-          <caret line="173" column="48" selection-start-line="173" selection-start-column="48" selection-end-line="173" selection-end-column="48" />
+        <state relative-caret-position="219">
+          <caret line="114" column="16" selection-start-line="114" selection-start-column="12" selection-end-line="114" selection-end-column="16" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -796,8 +796,54 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/sample/Database.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="399">
-          <caret line="230" column="75" selection-start-line="230" selection-start-column="75" selection-end-line="230" selection-end-column="75" />
+        <state relative-caret-position="351">
+          <caret line="278" column="24" selection-start-line="278" selection-start-column="24" selection-end-line="278" selection-end-column="24" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/sample/EditCashierPage.fxml">
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="117">
+          <caret line="9" column="172" selection-start-line="9" selection-start-column="172" selection-end-line="9" selection-end-column="172" />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="JavaFX-Scene-Builder" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/sample/EditCashierController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="521">
+          <caret line="50" column="35" lean-forward="true" selection-start-line="50" selection-start-column="35" selection-end-line="50" selection-end-column="35" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/sample/ManageCashierPage.fxml">
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="117">
+          <caret line="27" column="14" selection-start-line="27" selection-start-column="14" selection-end-line="27" selection-end-column="14" />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="JavaFX-Scene-Builder" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/sample/ManageCashierController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="209">
+          <caret line="83" lean-forward="true" selection-start-line="83" selection-end-line="83" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/sample/NewCashierController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="456">
+          <caret line="39" column="9" lean-forward="true" selection-start-line="39" selection-start-column="9" selection-end-line="39" selection-end-column="9" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
