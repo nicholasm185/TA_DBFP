@@ -12,6 +12,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
@@ -151,6 +152,40 @@ public class AdminPageController implements Initializable {
             e.printStackTrace();
         } catch (NullPointerException e){
             System.out.println("no selection");
+        }
+    }
+
+    @FXML
+    public void deleteButtonClicked(){
+        Bill selectedBill = BillTable.getSelectionModel().getSelectedItem();
+
+        int billID = selectedBill.getBillID();
+
+        Database.deleteBill(billID);
+
+        refreshBillList();
+    }
+
+    @FXML
+    public void manageCashierButtonClicked(){
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("ManageCashierPage.fxml"));
+            Parent ManageCashierParent = loader.load();
+
+            Stage stage = new Stage(); // New stage (window)
+
+            ManageCashierController controller = loader.getController();
+
+            // Setting the stage up
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setResizable(false);
+            stage.setTitle("Manage Cashiers");
+            stage.setScene(new Scene(ManageCashierParent));
+            stage.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

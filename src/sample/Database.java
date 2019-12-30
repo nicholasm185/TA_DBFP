@@ -156,6 +156,14 @@ public class Database {
         return rs;
     }
 
+    public static void deleteBill(int billID){
+        String sql = "DELETE FROM bill WHERE billID = '%d'";
+        sql = String.format(sql, billID);
+
+        executeSQL(sql);
+
+    }
+
 //    itemTransaction related functions
     public static void newItemTransaction(int billID, int productID, int qty){
 
@@ -215,11 +223,12 @@ public class Database {
         ArrayList<Cashier> cashierList = new ArrayList<>();
         try {
             conn = connect();
-            String sql = "SELECT cashierID, cashierName FROM cashier";
+            String sql = "SELECT cashierID, cashierName, password, admin, CASE WHEN admin = '0' THEN \"NO\" ELSE \"YES\" END AS adminStatus From cashier";
             ResultSet rs = conn.createStatement().executeQuery(sql);
 
             while (rs.next()){
-                cashierList.add(new Cashier(rs.getInt("cashierID"), rs.getString("cashierName")));
+                cashierList.add(new Cashier(rs.getInt("cashierID"), rs.getString("cashierName"),
+                        rs.getString("password"), rs.getString("adminStatus")));
             }
         } catch (SQLException e) {
             e.printStackTrace();

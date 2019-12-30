@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="485.0" prefWidth="834.0" xmlns="http://javafx.com/javafx/8.0.999-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.ManageCashierController">
+   <children>
+      <Label layoutX="325.0" layoutY="39.0" text="Manage Cashier">
+         <font>
+            <Font name="Arial Black" size="21.0" />
+         </font>
+      </Label>
+      <TableView fx:id="cashierTable" layoutX="39.0" layoutY="150.0" prefHeight="270.0" prefWidth="476.0">
+        <columns>
+          <TableColumn fx:id="cashierIDCol" prefWidth="75.0" text="Cashier ID" />
+          <TableColumn fx:id="cashierNameCol" prefWidth="170.0" text="Cashier Name" />
+            <TableColumn fx:id="cashierPassCol" prefWidth="114.0" text="Password" />
+            <TableColumn fx:id="adminStatusCol" prefWidth="116.0" text="Admin Status" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>
