@@ -17,12 +17,12 @@
             <TableColumn fx:id="subTotCol" prefWidth="106.0" text="Sub-Total" />
         </columns>
       </TableView>
-      <Button layoutX="428.0" layoutY="673.0" mnemonicParsing="false" text="Close" />
+      <Button layoutX="428.0" layoutY="673.0" mnemonicParsing="false" onAction="#closeButtonClicked" text="Close" />
       <Label layoutX="14.0" layoutY="672.0" text="Total:">
          <font>
             <Font name="Arial Black" size="18.0" />
          </font>
       </Label>
-      <Label layoutX="93.0" layoutY="677.0" prefHeight="17.0" prefWidth="224.0" text="Rp." />
+      <Label fx:id="totalPay" layoutX="93.0" layoutY="677.0" prefHeight="17.0" prefWidth="224.0" text="Rp." />
    </children>
 </AnchorPane>

@@ -30,7 +30,7 @@
       <Button layoutX="632.0" layoutY="519.0" mnemonicParsing="false" prefHeight="61.0" prefWidth="261.0" text="Manage Cashiers" />
       <Button layoutX="675.0" layoutY="160.0" mnemonicParsing="false" onAction="#seeItemsTransactionButtonClicked" prefHeight="61.0" prefWidth="218.0" text="See Items Transaction" />
       <Button layoutX="675.0" layoutY="261.0" mnemonicParsing="false" prefHeight="61.0" prefWidth="218.0" text="Delete Bill" />
-      <Button layoutX="675.0" layoutY="368.0" mnemonicParsing="false" prefHeight="61.0" prefWidth="218.0" text="Edit Bill" />
+      <Button layoutX="675.0" layoutY="368.0" mnemonicParsing="false" onAction="#editBillButtonClicked" prefHeight="61.0" prefWidth="218.0" text="Edit Bill" />
       <Label layoutX="38.0" layoutY="484.0" text="Filter by Date" />
       <Label layoutX="40.0" layoutY="512.0" text="Start date" />
       <Label layoutX="40.0" layoutY="564.0" text="End date" />

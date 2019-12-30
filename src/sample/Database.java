@@ -93,6 +93,28 @@ public class Database {
 
     }
 
+    public static ActualBill getABill(int billID){
+        String sql = "SELECT * FROM bill WHERE billID = " + billID;
+        ActualBill bill;
+
+        try{
+            conn = connect();
+            rs = conn.createStatement().executeQuery(sql);
+
+            rs.next();
+
+            bill = new ActualBill(rs.getInt("billID"), rs.getString("transactionTime"),
+                    rs.getInt("cashierID"), rs.getInt("storeID"), rs.getInt("paymentTypeID"));
+
+            return bill;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
     public static ResultSet selectAllBill(String startDate, String endDate){
 
         String sql = "SELECT b.billID, b.transactionTime, c.cashierName, s.storeName, p.paymentName FROM bill b " +
@@ -176,16 +198,70 @@ public class Database {
         ArrayList<String> listofTypes = new ArrayList<>();
         try {
             conn = connect();
-            String sql = "SELECT StoreName FROM store";
+            String sql = "SELECT * FROM store";
             ResultSet rs = conn.createStatement().executeQuery(sql);
 
             while (rs.next()){
-                listofTypes.add(rs.getString("StoreName"));
+                listofTypes.add(rs.getString("StoreID") + " "+ rs.getString("StoreName"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return listofTypes;
+    }
+
+//    cashier related functions
+    public static ArrayList<Cashier> getAllCashier(){
+        ArrayList<Cashier> cashierList = new ArrayList<>();
+        try {
+            conn = connect();
+            String sql = "SELECT cashierID, cashierName FROM cashier";
+            ResultSet rs = conn.createStatement().executeQuery(sql);
+
+            while (rs.next()){
+                cashierList.add(new Cashier(rs.getInt("cashierID"), rs.getString("cashierName")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return cashierList;
+    }
+
+    public static ArrayList<String> getCashierNames(){
+        ArrayList<String> cashierNames = new ArrayList<>();
+        try {
+            conn = connect();
+            String sql = "SELECT cashierID, cashierName FROM cashier";
+            ResultSet rs = conn.createStatement().executeQuery(sql);
+
+            while (rs.next()){
+                cashierNames.add(rs.getString("cashierID") + " " + rs.getString("cashierName"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return cashierNames;
+
+    }
+
+//    payment related functions
+
+    public static ArrayList<String> getPaymentMethods(){
+        ArrayList<String> paymentNames = new ArrayList<>();
+
+        try {
+            conn = connect();
+            String sql = "SELECT * FROM paymentType";
+            ResultSet rs = conn.createStatement().executeQuery(sql);
+
+            while (rs.next()){
+                paymentNames.add(rs.getString("paymentTypeID") + " " + rs.getString("paymentName"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return paymentNames;
+
     }
 
     public static void testconnect(){

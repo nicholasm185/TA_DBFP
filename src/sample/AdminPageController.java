@@ -92,7 +92,7 @@ public class AdminPageController implements Initializable {
     }
 
     @FXML
-    public void refreshStoreComboBox(){
+    private void refreshStoreComboBox(){
         stores.clear();
         stores = Database.getAllStores();
         stores.add("");
@@ -123,6 +123,34 @@ public class AdminPageController implements Initializable {
             stage.showAndWait();
         }catch (NullPointerException e){
             System.out.println("no bill selected");
+        }
+    }
+
+    @FXML
+    public void editBillButtonClicked(){
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("EditBillPage.fxml"));
+            Parent EditPageParent = loader.load();
+
+            Stage stage = new Stage(); // New stage (window)
+
+            // Passing data to CustomerFormController
+            EditBillPageController controller = loader.getController();
+            Bill selectedBill = BillTable.getSelectionModel().getSelectedItem();
+            ActualBill actualBill = Database.getABill(selectedBill.getBillID());
+            controller.passData(actualBill, this);
+
+            // Setting the stage up
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setResizable(false);
+            stage.setTitle("Edit Bill");
+            stage.setScene(new Scene(EditPageParent));
+            stage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (NullPointerException e){
+            System.out.println("no selection");
         }
     }
 }
