@@ -2,18 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/sample/EditCashierController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/sample/EditCashierPage.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/sample/NewCashierController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/sample/NewCashierPage.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TA_DBFP/sample/Database.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TA_DBFP/sample/Database.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TA_DBFP/sample/ManageCashierPage.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TA_DBFP/sample/ManageCashierPage.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/AdminPageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/AdminPageController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Database.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/ItemsTransactionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/ItemsTransactionController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/ManageCashierController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/ManageCashierController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/ManageCashierPage.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/ManageCashierPage.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/foodhalldb.sql" beforeDir="false" afterPath="$PROJECT_DIR$/foodhalldb.sql" afterDir="false" />
     </list>
     <ignored path="JavaFxApplication.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -287,7 +276,7 @@
     </option>
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
     <option name="width" value="976" />
@@ -471,18 +460,18 @@
       <workItem from="1577511635105" duration="6097000" />
       <workItem from="1577627352899" duration="987000" />
       <workItem from="1577628435813" duration="3870000" />
-      <workItem from="1577673294007" duration="28315000" />
+      <workItem from="1577673294007" duration="28556000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="44195000" />
+    <option name="totallyTimeSpent" value="44436000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1066" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1066" extended-state="7" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.6703755" visible="true" weight="0.117803834" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.6703755" visible="true" weight="0.117803834" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="Favorites" order="2" />
       <window_info id="Designer" order="3" />
@@ -491,7 +480,7 @@
       <window_info id="UI Designer" order="6" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.20900321" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.20900321" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 30, 2019 at 03:35 AM
+-- Generation Time: Dec 30, 2019 at 03:02 PM
 -- Server version: 10.1.39-MariaDB
 -- PHP Version: 7.3.5
 
@@ -41,9 +41,9 @@ CREATE TABLE `bill` (
 --
 
 INSERT INTO `bill` (`billID`, `transactionTime`, `cashierID`, `storeID`, `paymentTypeID`) VALUES
-(1, '2019-12-28 14:09:13', 1, 3, 1),
-(2, '2019-12-28 14:09:13', 4, 1, 1),
-(3, '2019-12-28 14:50:42', 3, 1, 3),
+(1, '2019-12-28 14:09:13', 1, 3, 4),
+(2, '2019-12-28 14:09:13', 1, 2, 1),
+(3, '2019-12-28 14:50:42', 3, 5, 1),
 (4, '2019-12-28 15:05:23', 1, 1, 5);
 
 -- --------------------------------------------------------
@@ -67,7 +67,8 @@ INSERT INTO `cashier` (`cashierID`, `cashierName`, `password`, `admin`) VALUES
 (1, 'Erick', 'eri123', 0),
 (2, 'John', 'joh123', 0),
 (3, 'Dan', 'dan123', 0),
-(4, 'Fatimah', 'fat123', 1);
+(4, 'Fatimah', 'fat123', 1),
+(5, 'Suresep', '123', 1);
 
 -- --------------------------------------------------------
 
@@ -215,13 +216,13 @@ ALTER TABLE `store`
 -- AUTO_INCREMENT for table `bill`
 --
 ALTER TABLE `bill`
-  MODIFY `billID` int(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `billID` int(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `cashier`
 --
 ALTER TABLE `cashier`
-  MODIFY `cashierID` int(3) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `cashierID` int(3) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `itemtransaction`
