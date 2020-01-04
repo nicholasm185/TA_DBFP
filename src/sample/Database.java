@@ -1,7 +1,6 @@
 package sample;
 
 import java.sql.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Database {
@@ -262,6 +261,7 @@ public class Database {
 
     }
 
+
     public static void deleteCashier(int cashierID){
 
         String sql = "DELETE FROM cashier WHERE cashierID = '%d'";
@@ -280,6 +280,41 @@ public class Database {
 
     }
 
+//    product related function
+    public static ArrayList<Product> getAllProducts(){
+        ArrayList<Product> productList = new ArrayList<>();
+        try {
+            conn = connect();
+            String sql = "SELECT productID, productLocation, productName, barcodeNumber, productPrice, stock From products";
+            ResultSet rs = conn.createStatement().executeQuery(sql);
+
+            while (rs.next()){
+                productList.add(new Product(rs.getInt("productID"), rs.getString("productLocation"),
+                        rs.getString("productName"), rs.getString("barcodeNumber"),
+                        rs.getInt("productPrice"), rs.getInt("stock")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return productList;
+    }
+    public static void addProduct(String productLocation, String productName, String barcodeNumber, int productPrice, int stock){
+
+        String sql = "INSERT INTO products (productLocation, productName, barcodeNumber, productPrice, stock) VALUES ('%s','%s','%s','%d','%d')";
+        sql = String.format(sql, productLocation, productName, barcodeNumber, productPrice, stock);
+
+        executeSQL(sql);
+
+    }
+
+    public static void deleteProduct(int productID){
+
+        String sql = "DELETE FROM products WHERE productID = '%d'";
+        sql = String.format(sql, productID);
+
+        executeSQL(sql);
+
+    }
 //    payment related functions
 
     public static ArrayList<String> getPaymentMethods(){
