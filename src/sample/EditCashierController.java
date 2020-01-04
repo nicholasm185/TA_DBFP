@@ -20,14 +20,14 @@ public class EditCashierController implements Initializable {
     @FXML private TextField passField;
     @FXML private ComboBox<String> adminCombo;
 
-    ManageCashierController parentController;
+    ManageUserController parentController;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         adminCombo.setItems(FXCollections.observableArrayList("NO", "YES"));
     }
 
-    public void passData(ManageCashierController controller, Cashier cashier){
+    public void passData(ManageUserController controller, Cashier cashier){
         this.parentController = controller;
         this.cashier = cashier;
 

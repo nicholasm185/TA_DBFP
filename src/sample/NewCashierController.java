@@ -7,7 +7,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -19,7 +18,7 @@ public class NewCashierController implements Initializable {
     @FXML private TextField passField;
     @FXML private ComboBox<String> adminCombo;
 
-    ManageCashierController parentController;
+    ManageUserController parentController;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -27,7 +26,7 @@ public class NewCashierController implements Initializable {
         adminCombo.setValue("NO");
     }
 
-    public void passData(ManageCashierController controller){
+    public void passData(ManageUserController controller){
         this.parentController = controller;
     }
 

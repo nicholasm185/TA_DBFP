@@ -36,21 +36,22 @@ public class LoginController implements Initializable {
 
 
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("CashierPage.fxml"));
-            Parent CashierPageParent = loader.load();
+            loader.setLocation(getClass().getResource("CashierHomePage.fxml"));
+            Parent CashierHomePageParent = loader.load();
 
             Stage stage = new Stage();
 
             Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             currentStage.close();
 
-            CashierPageController controller =loader.getController();
-            controller.passData(username);
+            CashierHomeController controller =loader.getController();
+            String role = "Cashier";
+            controller.passData(username,role);
 
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setResizable(false);
             stage.setTitle("Cashier");
-            stage.setScene(new Scene(CashierPageParent));
+            stage.setScene(new Scene(CashierHomePageParent));
             stage.show();
 
         } else if(Database.login(username, password) == 2){
@@ -59,25 +60,26 @@ public class LoginController implements Initializable {
 
 
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("AdminPage.fxml"));
-            Parent AdminPageParent = loader.load();
+            loader.setLocation(getClass().getResource("AdminHomePage.fxml"));
+            Parent AdminHomePageParent = loader.load();
 
             Stage stage = new Stage();
 
             Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             currentStage.close();
 
-            AdminPageController controller =loader.getController();
-            controller.passData(username);
+            AdminHomeController controller =loader.getController();
+            String role = "Admin";
+            controller.passData(username,role);
 
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setResizable(false);
             stage.setTitle("Admin");
-            stage.setScene(new Scene(AdminPageParent));
+            stage.setScene(new Scene(AdminHomePageParent));
             stage.show();
 
         } else{
-            System.out.println("fail");
+            System.out.println("Login Failed");
         }
 
     }

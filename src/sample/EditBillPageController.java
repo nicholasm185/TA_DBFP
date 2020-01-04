@@ -17,7 +17,7 @@ public class EditBillPageController implements Initializable {
 
     ActualBill bill;
 
-    private AdminPageController parentController;
+    private ManageTransactionController parentController;
 
     private ArrayList<String> cashierList = new ArrayList<>();
     private ArrayList<String> storeList = new ArrayList<>();
@@ -39,7 +39,7 @@ public class EditBillPageController implements Initializable {
     }
 
     @FXML
-    public void passData(ActualBill bill, AdminPageController parentController){
+    public void passData(ActualBill bill, ManageTransactionController parentController){
         this.bill = bill;
         this.parentController = parentController;
 

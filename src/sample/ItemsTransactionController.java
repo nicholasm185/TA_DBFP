@@ -22,12 +22,12 @@ public class ItemsTransactionController implements Initializable {
     int billID;
     int total = 0;
 
-    @FXML private TableView<Item> transactionTable;
-    @FXML private TableColumn<Item, Integer> transactionIDCol;
-    @FXML private TableColumn<Item, String> productNameCol;
-    @FXML private TableColumn<Item, Integer> qtyCol;
-    @FXML private TableColumn<Item, Integer> subTotCol;
-    ObservableList<Item> transactionList = FXCollections.observableArrayList();
+    @FXML private TableView<ItemTransaction> transactionTable;
+    @FXML private TableColumn<ItemTransaction, Integer> transactionIDCol;
+    @FXML private TableColumn<ItemTransaction, String> productNameCol;
+    @FXML private TableColumn<ItemTransaction, Integer> qtyCol;
+    @FXML private TableColumn<ItemTransaction, Integer> subTotCol;
+    ObservableList<ItemTransaction> transactionList = FXCollections.observableArrayList();
 
     @FXML private Label totalPay;
 
@@ -52,7 +52,7 @@ public class ItemsTransactionController implements Initializable {
                 int qty = rs.getInt("qty");
                 int price = rs.getInt("productPrice");
                 int subtotal = price*qty;
-                transactionList.add(new Item(rs.getInt("transactionID"), rs.getString("productName"), qty , subtotal ));
+                transactionList.add(new ItemTransaction(rs.getInt("transactionID"), rs.getString("productName"), qty, subtotal));
                 total += subtotal;
             }
 
