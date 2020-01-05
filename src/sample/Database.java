@@ -285,23 +285,31 @@ public class Database {
         ArrayList<Product> productList = new ArrayList<>();
         try {
             conn = connect();
-            String sql = "SELECT productID, productLocation, productName, barcodeNumber, productPrice, stock From products";
+            String sql = "SELECT * From products";
             ResultSet rs = conn.createStatement().executeQuery(sql);
 
             while (rs.next()){
-                productList.add(new Product(rs.getInt("productID"), rs.getString("productLocation"),
-                        rs.getString("productName"), rs.getString("barcodeNumber"),
-                        rs.getInt("productPrice"), rs.getInt("stock")));
+                productList.add(new Product(rs.getInt("productID"), rs.getString("productName"),
+                        rs.getInt("productPrice")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return productList;
     }
-    public static void addProduct(String productLocation, String productName, String barcodeNumber, int productPrice, int stock){
+    public static void addProduct(String productName, int productPrice){
 
-        String sql = "INSERT INTO products (productLocation, productName, barcodeNumber, productPrice, stock) VALUES ('%s','%s','%s','%d','%d')";
-        sql = String.format(sql, productLocation, productName, barcodeNumber, productPrice, stock);
+        String sql = "INSERT INTO products (productName, productPrice) VALUES ('%s','%d')";
+        sql = String.format(sql, productName, productPrice);
+
+        executeSQL(sql);
+
+    }
+
+    public static void updateProduct(int productID, String productName, int productPrice){
+
+        String sql = "UPDATE products SET productName = '%s', productPrice = '%d' WHERE productID = '%d'";
+        sql = String.format(sql, productName, productPrice, productID);
 
         executeSQL(sql);
 

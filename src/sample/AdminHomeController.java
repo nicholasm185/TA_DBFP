@@ -34,6 +34,9 @@ public class AdminHomeController implements Initializable {
         Parent ManageItemsPageParent = loader.load();
         Stage stage = new Stage();
 
+        ManageProductsController controller = loader.getController();
+        controller.passData(username, role);
+
         Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         currentStage.close();
 
@@ -67,6 +70,9 @@ public class AdminHomeController implements Initializable {
         loader.setLocation(getClass().getResource("NewTransactionPage.fxml"));
         Parent LoginPageParent = loader.load();
         Stage stage = new Stage();
+
+        NewTransactionController controller = loader.getController();
+        controller.passData(username,role);
 
         Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         currentStage.close();

@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.stage.Modality;
@@ -30,6 +31,8 @@ public class NewTransactionController implements Initializable {
     @FXML private TableColumn<Cashier, String> adminStatusCol;
     ObservableList<Cashier> cashierList = FXCollections.observableArrayList();
 
+    @FXML private Button homeButton;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -39,6 +42,7 @@ public class NewTransactionController implements Initializable {
 //        adminStatusCol.setCellValueFactory(new PropertyValueFactory<>("adminStatus"));
 
 //        refresh();
+        homeButton.setVisible(false);
     }
 
     @FXML
@@ -48,6 +52,16 @@ public class NewTransactionController implements Initializable {
         cashierTable.setItems(cashierList);
 
     }
+
+    public void passData(String username, String role){
+        this.username = username;
+        this.role = role;
+
+        if(this.role.equals("Admin")){
+            homeButton.setVisible(true);
+        }
+    }
+
     //
     @FXML
     public void addItemButtonClicked(){
