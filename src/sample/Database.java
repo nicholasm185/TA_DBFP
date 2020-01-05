@@ -120,7 +120,8 @@ public class Database {
                 "INNER JOIN cashier c on b.cashierID = c.cashierID " +
                 "INNER JOIN store s on b.storeID = s.StoreID " +
                 "INNER JOIN paymenttype p ON b.paymentTypeID = p.paymentTypeID " +
-                "WHERE b.transactionTime BETWEEN \'" + startDate + "\' and \'" + endDate +"\'";
+                "WHERE b.transactionTime BETWEEN \'" + startDate + "\' and \'" + endDate +"\'" +
+                "ORDER BY b.billID ASC";
 
         try{
             conn = connect();
