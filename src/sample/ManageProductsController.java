@@ -28,8 +28,6 @@ public class ManageProductsController implements Initializable {
     @FXML private TableColumn<Product, String> productIDCol;
     @FXML private TableColumn<Product, String> productNameCol;
     @FXML private TableColumn<Product, String> priceCol;
-    @FXML private TableColumn<Product, String> stockCol;
-    @FXML private TableColumn<Product, String> storeLocationCol;
     private ObservableList<Product> productList = FXCollections.observableArrayList();
 
 
@@ -38,10 +36,13 @@ public class ManageProductsController implements Initializable {
         productIDCol.setCellValueFactory(new PropertyValueFactory<>("productID"));
         productNameCol.setCellValueFactory(new PropertyValueFactory<>("productName"));
         priceCol.setCellValueFactory(new PropertyValueFactory<>("productPrice"));
-        stockCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
-        storeLocationCol.setCellValueFactory(new PropertyValueFactory<>("storeLocation"));
 
         refresh();
+    }
+
+    public void passData(String username, String role){
+        this.username = username;
+        this.role = role;
     }
 
     @FXML
@@ -53,40 +54,7 @@ public class ManageProductsController implements Initializable {
         productTableView.setItems(productList);
 
     }
-//   @FXML
-//    public void refreshProductList(){
-//        productList.clear();
-////        String storename = StoreCombo.getValue();
-////        String startDate = startDatePicker.getValue().toString();
-////        String endDate = endDatePicker.getValue().toString();
-////        ResultSet rs;
-////        if(storename.isEmpty()) {
-////            rs = Database.selectAllBill(startDate,endDate);
-////        } else{
-////        }
-////            rs = Database.selectBillFromStore(startDate,endDate,storename.substring(2));
-//
-//        try {
-//            while (rs.next()) {
-//                BillList.add(new Bill(rs.getInt("billID"), rs.getString("transactionTime"), rs.getString("cashierName")
-//                        , rs.getString("storeName"), rs.getString("paymentName")));
-//            }
-//
-//            rs.close();
-//
-//            BillIDCol.setCellValueFactory(new PropertyValueFactory<>("billID"));
-//            TTCol.setCellValueFactory(new PropertyValueFactory<>("transactionTime"));
-//            CashierNameCol.setCellValueFactory(new PropertyValueFactory<>("cashierName"));
-//            StrNameCol.setCellValueFactory(new PropertyValueFactory<>("storeName"));
-//            PMCol.setCellValueFactory(new PropertyValueFactory<>("paymentType"));
-//            BillTable.setItems(BillList);
-//
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        } catch (NullPointerException e){
-//            System.out.println("no data");
-//        }
-//    }
+
     @FXML
     public void addProductButtonClicked(){
         System.out.print("AddProductButtonClicked");
@@ -115,27 +83,27 @@ public class ManageProductsController implements Initializable {
     @FXML
     public void editProductButtonClicked(){
     System.out.println("editProductButtonClicked");
-//        try{
-//            FXMLLoader loader = new FXMLLoader();
-//            loader.setLocation(getClass().getResource("EditCashierPage.fxml"));
-//            Parent EditCashierParent = loader.load();
-//
-//            Stage stage = new Stage(); // New stage (window)
-//
-//            EditCashierController controller = loader.getController();
-//            controller.passData(this, cashierTable.getSelectionModel().getSelectedItem());
-//
-//            // Setting the stage up
-//            stage.initModality(Modality.APPLICATION_MODAL);
-//            stage.setResizable(false);
-//            stage.setTitle("Edit Cashier");
-//            stage.setScene(new Scene(EditCashierParent));
-//            stage.showAndWait();
-//        } catch (NullPointerException e){
-//            System.out.println("No selection");
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        try{
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("EditProductPage.fxml"));
+            Parent EditProductParent = loader.load();
+
+            Stage stage = new Stage(); // New stage (window)
+
+            EditProductController controller = loader.getController();
+            controller.passData(productTableView.getSelectionModel().getSelectedItem(), this);
+
+            // Setting the stage up
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setResizable(false);
+            stage.setTitle("Edit Product");
+            stage.setScene(new Scene(EditProductParent));
+            stage.showAndWait();
+        } catch (NullPointerException e){
+            System.out.println("No selection");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void refreshItemList(){
@@ -155,14 +123,7 @@ public class ManageProductsController implements Initializable {
             System.out.println("no selection");
         }
     }
-//    @FXML
-//    public void passData(String username, String role){
-//        this.username = username;
-//        this.role = role;
-//        System.out.println("U "+this.username);
-//        System.out.println("R "+this.role);
 
-//    }
 
     public void homeButtonClicked(ActionEvent event) throws IOException {
         System.out.println("HOME Btn Clicked");

@@ -47,7 +47,7 @@ public class ManageTransactionController implements Initializable {
         refreshStoreComboBox();
         StoreCombo.setValue("");
         startDatePicker.setValue(LocalDate.now());
-        endDatePicker.setValue(LocalDate.now());
+        endDatePicker.setValue(LocalDate.now().plusDays(1));
         refreshBillList();
     }
 
@@ -159,27 +159,6 @@ public class ManageTransactionController implements Initializable {
         Database.deleteBill(billID);
 
         refreshBillList();
-    }
-
-    @FXML
-    public void manageCashierButtonClicked(){
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("ManageUserPage.fxml"));
-            Parent ManageCashierParent = loader.load();
-
-            Stage stage = new Stage(); // New stage (window)
-
-            // Setting the stage up
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setResizable(false);
-            stage.setTitle("Manage Cashiers");
-            stage.setScene(new Scene(ManageCashierParent));
-            stage.showAndWait();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public void homeButtonClicked(ActionEvent event) throws IOException {
