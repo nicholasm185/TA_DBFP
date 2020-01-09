@@ -12,22 +12,29 @@ public class Database {
     static Statement stmt;
     static ResultSet rs;
 
-    public static Connection connect(){
+    public static void connect(){
         try {
             Class.forName(JDBC_DRIVER);
-            return DriverManager.getConnection(DB_URL, USER, PASS);
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
-            return null;
+        }
+    }
+
+    public static void close(){
+        try{
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
     public static boolean executeSQL(String sql){
         try {
-            conn = connect();
+//            conn = connect();
             stmt = conn.createStatement();
             boolean result = stmt.execute(sql);
-            conn.close();
+//            conn.close();
             return result;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -42,7 +49,7 @@ public class Database {
             String sql = "SELECT * FROM cashier WHERE cashierName = '%s' AND password = MD5('%s')";
 
             try {
-                conn = connect();
+//                conn = connect();
                 sql = String.format(sql, username, password);
                 rs = conn.createStatement().executeQuery(sql);
 
@@ -72,11 +79,11 @@ public class Database {
         String sql = "INSERT INTO bill (cashierID, storeID, paymentTypeID) values ('%d', '%d', '%d')";
 
         try {
-            conn = connect();
+//            conn = connect();
             stmt = conn.createStatement();
             sql = String.format(sql, cashierID, storeID, paymentTypeID);
             stmt.execute(sql);
-            conn.close();
+//            conn.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -97,7 +104,7 @@ public class Database {
         ActualBill bill;
 
         try{
-            conn = connect();
+//            conn = connect();
             rs = conn.createStatement().executeQuery(sql);
 
             rs.next();
@@ -124,7 +131,7 @@ public class Database {
                 "ORDER BY b.billID ASC";
 
         try{
-            conn = connect();
+//            conn = connect();
             rs = conn.createStatement().executeQuery(sql);
 
         } catch (SQLException e) {
@@ -145,7 +152,7 @@ public class Database {
                 "WHERE b.transactionTime BETWEEN \'" + startDate + "\' and \'" + endDate +"\' AND s.StoreName = \'" + storeName + "\'";
 
         try{
-            conn = connect();
+//            conn = connect();
             rs = conn.createStatement().executeQuery(sql);
 
         } catch (SQLException e) {
@@ -189,7 +196,7 @@ public class Database {
         sql = String.format(sql, billID);
 
         try{
-            conn = connect();
+//            conn = connect();
             rs = conn.createStatement().executeQuery(sql);
 
         } catch (SQLException e) {
@@ -205,7 +212,7 @@ public class Database {
     public static ArrayList<String> getAllStores() throws NullPointerException {
         ArrayList<String> listofTypes = new ArrayList<>();
         try {
-            conn = connect();
+//            conn = connect();
             String sql = "SELECT * FROM store";
             ResultSet rs = conn.createStatement().executeQuery(sql);
 
@@ -222,7 +229,7 @@ public class Database {
     public static ArrayList<Cashier> getAllCashier(){
         ArrayList<Cashier> cashierList = new ArrayList<>();
         try {
-            conn = connect();
+//            conn = connect();
             String sql = "SELECT cashierID, cashierName, password, admin, CASE WHEN admin = '0' THEN \"NO\" ELSE \"YES\" END AS adminStatus From cashier";
             ResultSet rs = conn.createStatement().executeQuery(sql);
 
@@ -239,7 +246,7 @@ public class Database {
     public static ArrayList<String> getCashierNames(){
         ArrayList<String> cashierNames = new ArrayList<>();
         try {
-            conn = connect();
+//            conn = connect();
             String sql = "SELECT cashierID, cashierName FROM cashier";
             ResultSet rs = conn.createStatement().executeQuery(sql);
 
@@ -303,7 +310,7 @@ public class Database {
     public static ArrayList<Product> getAllProducts(){
         ArrayList<Product> productList = new ArrayList<>();
         try {
-            conn = connect();
+//            conn = connect();
             String sql = "SELECT * From products";
             ResultSet rs = conn.createStatement().executeQuery(sql);
 
@@ -348,7 +355,7 @@ public class Database {
         ArrayList<String> paymentNames = new ArrayList<>();
 
         try {
-            conn = connect();
+//            conn = connect();
             String sql = "SELECT * FROM paymentType";
             ResultSet rs = conn.createStatement().executeQuery(sql);
 
@@ -367,12 +374,12 @@ public class Database {
         String sql = "Select * from itemTransaction";
 
         try {
-            conn = connect();
+//            conn = connect();
             rs = conn.createStatement().executeQuery(sql);
             while(rs.next()){
                 System.out.println(rs.getString("transactionID"));
             }
-            conn.close();
+//            conn.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }

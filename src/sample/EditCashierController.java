@@ -37,7 +37,6 @@ public class EditCashierController implements Initializable {
         this.cashier = cashier;
 
         nameField.setText(cashier.getCashierName());
-        passField.setText(cashier.getCashierPass());
 
         adminCombo.setValue(cashier.getAdminStatus());
     }
@@ -49,13 +48,25 @@ public class EditCashierController implements Initializable {
         String pass = passField.getText();
         boolean status = Database.checkPassword(cashier.getCashierID(),oldpass);
 
-        if(passField.getText().equals(confirmPass.getText())) {
+        if(!passField.getText().equals(confirmPass.getText())) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Password fields do not match");
+            alert.setHeaderText("Please input the same password");
+            alert.setContentText("Make sure the passwords you input on the new password and confirm password fields are the same");
+
+            alert.showAndWait();
+        }else {
             if (status) {
                 int admin = 0;
                 if (adminCombo.getValue().equals("YES")) {
                     admin = 1;
                 }
                 Database.updateCashier(cashier.getCashierID(), name, pass, admin);
+
+                parentController.refresh();
+
+                Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                currentStage.close();
             } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Wrong Password");
@@ -64,18 +75,9 @@ public class EditCashierController implements Initializable {
 
                 alert.showAndWait();
             }
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Password fields do not match");
-            alert.setHeaderText("Please input the same password");
-            alert.setContentText("Make sure the passwords you input on the new password and confirm password fields are the same");
 
-            alert.showAndWait();
         }
 
-        parentController.refresh();
-
-        Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        currentStage.close();
     }
 
 }
