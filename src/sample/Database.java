@@ -39,7 +39,7 @@ public class Database {
 //    login function
     public static int login(String username, String password){
         if(!username.isEmpty() && !password.isEmpty()) {
-            String sql = "SELECT * FROM cashier WHERE cashierName = '%s' AND password = '%s'";
+            String sql = "SELECT * FROM cashier WHERE cashierName = '%s' AND password = MD5('%s')";
 
             try {
                 conn = connect();
@@ -255,7 +255,7 @@ public class Database {
 
     public static void addCashier(String name, String pass, int admin){
 
-        String sql = "INSERT INTO cashier (cashierName, password, admin) VALUES ('%s','%s','%d')";
+        String sql = "INSERT INTO cashier (cashierName, password, admin) VALUES ('%s', MD5('%s'),'%d')";
         sql = String.format(sql, name, pass, admin);
 
         executeSQL(sql);
@@ -274,10 +274,28 @@ public class Database {
 
     public static void updateCashier(int cashierID, String cashierName, String cashierPass, int admin){
 
-        String sql = "UPDATE cashier SET cashierName = '%s', password = '%s', admin = '%d' WHERE cashierID = '%d'";
+        String sql = "UPDATE cashier SET cashierName = '%s', password = MD5('%s'), admin = '%d' WHERE cashierID = '%d'";
         sql = String.format(sql, cashierName, cashierPass, admin, cashierID);
 
         executeSQL(sql);
+
+    }
+
+    public static boolean checkPassword(int cashierID, String password){
+
+        String sql = "SELECT * from cashier WHERE cashierID = '%d' AND password = MD5('%s')";
+        sql = String.format(sql, cashierID, password);
+
+        try {
+            ResultSet rs = conn.createStatement().executeQuery(sql);
+
+            if (rs.next()){
+                return true ;
+            }
+        } catch (SQLException e) {
+            return false;
+        }
+        return false;
 
     }
 
