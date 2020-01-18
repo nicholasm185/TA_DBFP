@@ -27,7 +27,6 @@ public class ManageUserController implements Initializable {
     @FXML private TableView<Cashier> cashierTable;
     @FXML private TableColumn<Cashier, Integer> cashierIDCol;
     @FXML private TableColumn<Cashier, String> cashierNameCol;
-    @FXML private TableColumn<Cashier, String> cashierPassCol;
     @FXML private TableColumn<Cashier, String> adminStatusCol;
     ObservableList<Cashier> cashierList = FXCollections.observableArrayList();
 
@@ -36,7 +35,6 @@ public class ManageUserController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         cashierIDCol.setCellValueFactory(new PropertyValueFactory<>("cashierID"));
         cashierNameCol.setCellValueFactory(new PropertyValueFactory<>("cashierName"));
-        cashierPassCol.setCellValueFactory(new PropertyValueFactory<>("cashierPass"));
         adminStatusCol.setCellValueFactory(new PropertyValueFactory<>("adminStatus"));
 
         refresh();

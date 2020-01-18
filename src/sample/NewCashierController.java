@@ -5,7 +5,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -14,8 +16,9 @@ import java.util.ResourceBundle;
 
 public class NewCashierController implements Initializable {
 
+    @FXML public PasswordField confirmPass;
     @FXML private TextField nameField;
-    @FXML private TextField passField;
+    @FXML private PasswordField passField;
     @FXML private ComboBox<String> adminCombo;
 
     ManageUserController parentController;
@@ -38,12 +41,21 @@ public class NewCashierController implements Initializable {
             admin = 1;
         }
 
-        Database.addCashier(name, pass, admin);
+        if(passField.getText().equals(confirmPass.getText())){
+            Database.addCashier(name, pass, admin);
+            parentController.refresh();
 
-        parentController.refresh();
+            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            currentStage.close();
+        }else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Password fields do not match");
+            alert.setHeaderText("Please input the same password");
+            alert.setContentText("Make sure the passwords you input on the new password and confirm password fields are the same");
 
-        Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        currentStage.close();
+            alert.showAndWait();
+        }
+
 
     }
 
