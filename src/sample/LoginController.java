@@ -86,10 +86,4 @@ public class LoginController implements Initializable {
         }
 
     }
-
-    @FXML
-    private void testbuttonClicked(){
-        Database.newItemTransaction(3,3, 1);
-        Database.testconnect();
-    }
 }

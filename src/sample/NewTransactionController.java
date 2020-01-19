@@ -9,9 +9,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -23,138 +25,204 @@ public class NewTransactionController implements Initializable {
 
     String username;
     String role;
+    private int currentBillNumber;
+    private int total;
+    @FXML private Label totalLabel;
 
-    @FXML private TableView<Cashier> cashierTable;
-    @FXML private TableColumn<Cashier, Integer> cashierIDCol;
-    @FXML private TableColumn<Cashier, String> cashierNameCol;
-    @FXML private TableColumn<Cashier, String> cashierPassCol;
-    @FXML private TableColumn<Cashier, String> adminStatusCol;
-    ObservableList<Cashier> cashierList = FXCollections.observableArrayList();
+    @FXML private TableView<Product> inventoryTable;
+    @FXML private TableColumn<Product, String> productIDInvenCol;
+    @FXML private TableColumn<Product, String> productNameInvenCol;
+    @FXML private TableColumn<Product, String> priceInvenCol;
 
-    @FXML private Button homeButton;
+//    @FXML private ComboBox<Integer> qtyCombo;
 
+    @FXML private TableView<ItemTransaction> cartTable;
+    @FXML private TableColumn<ItemTransaction, String> productIDCartCol;
+    @FXML private TableColumn<ItemTransaction, String> productNameCartCol;
+    @FXML private TableColumn<ItemTransaction, String> priceCartCol;
+    @FXML private TableColumn<ItemTransaction, String> qtyCartCol;
+    @FXML private TableColumn<ItemTransaction, String> subtotalCartCol;
+
+    private ObservableList<Product> inventoryList = FXCollections.observableArrayList();
+    private ObservableList<ItemTransaction> cartList = FXCollections.observableArrayList();
+    @FXML private TextField qtyField;
+
+//    private Date date = new Date(); // this object controains the current date value
+//    private SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-//        cashierIDCol.setCellValueFactory(new PropertyValueFactory<>("cashierID"));
-//        cashierNameCol.setCellValueFactory(new PropertyValueFactory<>("cashierName"));
-//        cashierPassCol.setCellValueFactory(new PropertyValueFactory<>("cashierPass"));
-//        adminStatusCol.setCellValueFactory(new PropertyValueFactory<>("adminStatus"));
+        if (Database.checkLastBill(currentBillNumber) == 0){
+        System.out.println("AddInitialBill");
+//        Database.deleteBill(currentBillNumber);
+        Database.addInitBill();
 
-//        refresh();
-        homeButton.setVisible(false);
+        }
+        currentBillNumber = Database.getBillNumber();
+        System.out.println("currBillNum"+currentBillNumber);
+        productIDInvenCol.setCellValueFactory(new PropertyValueFactory<>("productID"));
+        productNameInvenCol.setCellValueFactory(new PropertyValueFactory<>("productName"));
+        priceInvenCol.setCellValueFactory(new PropertyValueFactory<>("productPrice"));
+
+//        -----------------------------------------------------------------------------------
+//        qtyCombo.setItems(FXCollections.observableArrayList(1,2,3,4,5));
+//        qtyCombo.setValue(1);
+
+//        -----------------------------------------------------------------------------------
+
+//        productIDCartCol.setCellValueFactory(new PropertyValueFactory<>("productID"));
+////        productNameCartCol.setCellValueFactory(new PropertyValueFactory<>("productName"));
+////        priceCartCol.setCellValueFactory(new PropertyValueFactory<>("productPrice"));
+//        qtyCartCol.setCellValueFactory(new PropertyValueFactory<>("qty"));
+//        subtotalCartCol.setCellValueFactory(new PropertyValueFactory<>("subtotal"));
+
+        refresh();
+    }
+
+    @FXML
+    public void passData(String username, String role){
+        this.username = username;
+        this.role = role;
+        System.out.println("username "+username);
+        System.out.println("role "+role);
     }
 
     @FXML
     public void refresh(){
-        cashierList.clear();
-        cashierList.addAll(Database.getAllCashier());
-        cashierTable.setItems(cashierList);
+        System.out.println("refreshparent");
+
+
+        inventoryList.clear();
+        inventoryList.addAll(Database.getAllProducts());
+        inventoryTable.setItems(inventoryList);
+
+        cartList.clear();
+        cartList.addAll(Database.getAllItemTransactionCurrBill(currentBillNumber));
+        cartTable.setItems(cartList);
+
+//        this.total = Database.sumItemTransaction(currentBillNumber);
+//        System.out.println("TOTAL"+this.total);
+//        totalLabel.setText("TOTAL " + this.total);
 
     }
-
-    public void passData(String username, String role){
-        this.username = username;
-        this.role = role;
-
-        if(this.role.equals("Admin")){
-            homeButton.setVisible(true);
-        }
-    }
-
     //
     @FXML
     public void addItemButtonClicked(){
-        System.out.print("addItemButtonClicked");
-//        try {
-//            FXMLLoader loader = new FXMLLoader();
-//            loader.setLocation(getClass().getResource("NewCashierPage.fxml"));
-//            Parent NewCashierParent = loader.load();
-//
-//            Stage stage = new Stage(); // New stage (window)
-//
-//            NewCashierController controller = loader.getController();
-//            controller.passData(this);
-//
-//            // Setting the stage up
-//            stage.initModality(Modality.APPLICATION_MODAL);
-//            stage.setResizable(false);
-//            stage.setTitle("New Cashier");
-//            stage.setScene(new Scene(NewCashierParent));
-//            stage.showAndWait();
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        System.out.println("addItemButtonClicked");
+        try {
+            Product selected = inventoryTable.getSelectionModel().getSelectedItem();
+
+
+            int billID = currentBillNumber;
+            int productID = selected.getProductID();
+            int productPrice = selected.getProductPrice();
+            int qty = 1;
+
+            String qtytf = qtyField.getText();
+            System.out.println("qtytf"+qtytf);
+            if (!qtytf.equals("")){
+                qty = Integer.parseInt(qtytf);
+            }
+            int subtotal = productPrice * qty;
+
+            System.out.println("billID"+billID);
+            System.out.println("ID"+productID);
+            System.out.println("Price"+productPrice);
+            System.out.println("subtotal"+subtotal);
+
+            Database.addItemTransaction(billID, productID, qty, subtotal);
+            refresh();
+
+
+        } catch (NullPointerException e){
+            System.out.println("no selection");
+        }
     }
-    //
+
     @FXML
     public void deleteItemButtonClicked(){
-        System.out.println("deleteItemButtonClicked");
-//        try{
-//            FXMLLoader loader = new FXMLLoader();
-//            loader.setLocation(getClass().getResource("EditCashierPage.fxml"));
-//            Parent EditCashierParent = loader.load();
-//
-//            Stage stage = new Stage(); // New stage (window)
-//
-//            EditCashierController controller = loader.getController();
-//            controller.passData(this, cashierTable.getSelectionModel().getSelectedItem());
-//
-//            // Setting the stage up
-//            stage.initModality(Modality.APPLICATION_MODAL);
-//            stage.setResizable(false);
-//            stage.setTitle("Edit Cashier");
-//            stage.setScene(new Scene(EditCashierParent));
-//            stage.showAndWait();
-//        } catch (NullPointerException e){
-//            System.out.println("No selection");
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-    }
 
-    public void refreshItemList(){
-        System.out.println("refreshItemList");
-    }
-
-    @FXML
-    public void checkOutButtonClicked(){
-        System.out.println("checkOutButtonClicked");
 //        try{
-//            Cashier selected = cashierTable.getSelectionModel().getSelectedItem();
-//            Database.deleteCashier(selected.getCashierID());
+//            ItemTransaction selected = cartTable.getSelectionModel().getSelectedItem();
+//            Database.deleteItemTransaction(selected.getItemID());
 //            refresh();
 //
 //        } catch (NullPointerException e){
 //            System.out.println("no selection");
 //        }
-//    }
-//    @FXML
-//    public void passData(String username, String role){
-//        this.username = username;
-//        this.role = role;
-//        System.out.println("U "+this.username);
-//        System.out.println("R "+this.role);
+    }
 
+    @FXML
+    public void checkOutButtonClicked(){
+        System.out.println("checkOutButtonClicked");
+//        int billID = currentBillNumber;
+////        String transactionTime =dateFormat.format(date);
+//        int cashierID = Database.getCashierID(username);
+//
+//
+//        try {
+//            FXMLLoader loader = new FXMLLoader();
+//            loader.setLocation(getClass().getResource("CheckOutPage.fxml"));
+//            Parent CheckOutParent = loader.load();
+//
+//            Stage stage = new Stage(); // New stage (window)
+//
+//            CheckOutController controller = loader.getController();
+//            controller.passData(this, billID, cashierID);
+//
+//            // Setting the stage up
+//            stage.initModality(Modality.APPLICATION_MODAL);
+//            stage.setResizable(false);
+//            stage.setTitle("Check Out");
+//            stage.setScene(new Scene(CheckOutParent));
+//            stage.showAndWait();
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
     }
 
     public void homeButtonClicked(ActionEvent event) throws IOException {
         System.out.println("HOME Btn Clicked");
+
+
+//        System.out.println("deleteItemTransaction");
+//        Database.deleteItemTransactionByBill(currentBillNumber);
+
+
+
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("AdminHomePage.fxml"));
+
+        String fxml;
+        String title;
+
+        if (role.equals("Cashier")){
+            fxml = "CashierHomePage.fxml";
+            title = "Cashier Home Page";
+        } else{
+            fxml = "AdminHomePage.fxml";
+            title = "Admin Home Page";
+        }
+
+
+        loader.setLocation(getClass().getResource(fxml));
         Parent AdminHomePageParent = loader.load();
         Stage stage = new Stage();
 
         Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         currentStage.close();
 
-        AdminHomeController controller =loader.getController();
-        controller.passData(username,role);
+        if (role.equals("Cashier")) {
+            CashierHomeController controller = loader.getController();
+            controller.passData(username, role);
+        }else{
+            AdminHomeController controller =loader.getController();
+            controller.passData(username, role);
+        }
 
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setResizable(false);
-        stage.setTitle("Admin Home Page");
+        stage.setTitle(title);
         stage.setScene(new Scene(AdminHomePageParent));
         stage.show();
     }

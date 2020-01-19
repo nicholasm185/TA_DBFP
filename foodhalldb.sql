@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 30, 2019 at 03:02 PM
+-- Generation Time: Jan 18, 2020 at 06:07 AM
 -- Server version: 10.1.39-MariaDB
--- PHP Version: 7.3.5
+-- PHP Version: 7.1.29
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -138,7 +138,8 @@ INSERT INTO `products` (`productID`, `productName`, `productPrice`) VALUES
 (3, 'Paket 3', 34000),
 (4, 'Fried Fishcake 3x', 15000),
 (5, 'Fried Fishcake 1x', 5000),
-(6, 'Shrimp Nugget', 15000);
+(6, 'Shrimp Nugget', 15000),
+(7, 'GanjaMurah', 25000);
 
 -- --------------------------------------------------------
 
@@ -216,7 +217,7 @@ ALTER TABLE `store`
 -- AUTO_INCREMENT for table `bill`
 --
 ALTER TABLE `bill`
-  MODIFY `billID` int(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `billID` int(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `cashier`
@@ -240,7 +241,7 @@ ALTER TABLE `paymenttype`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `productID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `productID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `store`

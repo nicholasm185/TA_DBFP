@@ -42,33 +42,34 @@ public class ItemsTransactionController implements Initializable {
     }
 
     public void getTransactions(){
-        ResultSet rs = Database.getItemTransaction(this.billID);
-        System.out.println("here");
-        System.out.println("selected bill is" + this.billID);
-
-        try {
-            while (rs.next()){
-                System.out.println("now here");
-                int qty = rs.getInt("qty");
-                int price = rs.getInt("productPrice");
-                int subtotal = price*qty;
-                transactionList.add(new ItemTransaction(rs.getInt("transactionID"), rs.getString("productName"), qty, subtotal));
-                total += subtotal;
-            }
-
-            transactionIDCol.setCellValueFactory(new PropertyValueFactory<>("itemID"));
-            productNameCol.setCellValueFactory(new PropertyValueFactory<>("productName"));
-            qtyCol.setCellValueFactory(new PropertyValueFactory<>("qty"));
-            subTotCol.setCellValueFactory(new PropertyValueFactory<>("sub_total"));
-            transactionTable.setItems(transactionList);
-
-            totalPay.setText("Rp." + total);
-
-        } catch (NullPointerException e){
-            System.out.println("no data");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+//        ResultSet rs = Database.getItemTransaction(this.billID);
+//        System.out.println("here");
+//        System.out.println("selected bill is" + this.billID);
+//
+//        try {
+//            while (rs.next()){
+//                System.out.println("now here");
+//                int qty = rs.getInt("qty");
+//                int price = rs.getInt("productPrice");
+//                int subtotal = price*qty;
+//                transactionList.add(new ItemTransaction(rs.getInt("itemID"), billID,
+//                        rs.getString("productName"), rs.getInt("transactionID"), qty, subtotal));
+//                total += subtotal;
+//            }
+//
+//            transactionIDCol.setCellValueFactory(new PropertyValueFactory<>("itemID"));
+//            productNameCol.setCellValueFactory(new PropertyValueFactory<>("productName"));
+//            qtyCol.setCellValueFactory(new PropertyValueFactory<>("qty"));
+//            subTotCol.setCellValueFactory(new PropertyValueFactory<>("sub_total"));
+//            transactionTable.setItems(transactionList);
+//
+//            totalPay.setText("Rp." + total);
+//
+//        } catch (NullPointerException e){
+//            System.out.println("no data");
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
     }
 
     public void closeButtonClicked(ActionEvent event){

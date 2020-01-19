@@ -90,6 +90,56 @@ public class Database {
 
     }
 
+    public static int checkLastBill(int currbillID) {
+        String sql = " SELECT cashierID FROM bill WHERE billID = '%d' AS lastCashier";
+        sql = String.format(sql, currbillID);
+
+        try {
+            rs = conn.createStatement().executeQuery(sql);
+            rs.next();
+            int lastCashier = rs.getInt("lastCashier");
+            System.out.println("lastCashier"+lastCashier);
+            return lastCashier;
+
+//            return records;
+        } catch (SQLException e) {
+//            e.printStackTrace();
+            return 0;
+        }
+    }
+
+    public static void addInitBill() {
+        String sql = "INSERT INTO bill (cashierID, storeID, paymentTypeID) values (null,null,null)";
+//        System.out.println("cashierID"+cashierID);
+//        System.out.println("storeID"+storeID);
+//        System.out.println("paymentTypeID"+paymentTypeID);d
+        try {
+//            conn = connect();
+            stmt = conn.createStatement();
+
+//            sql = String.format(sql,NULL,);
+            stmt.execute(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static int getBillNumber() {
+//        String sql = " SELECT COUNT(*) AS total FROM bill ";
+        String sql = " SELECT MAX(billID) AS total FROM bill  ";
+
+        try {
+            rs = conn.createStatement().executeQuery(sql);
+            rs.next();
+            return rs.getInt("total");
+
+//            return records;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
     public static void updateBill(int billID, int cashierID, int storeID, int paymentTypeID){
 
         String sql = "UPDATE bill set cashierID = '%d', storeID = '%d', paymentTypeID = '%d' where billID = '%d'";
@@ -172,10 +222,10 @@ public class Database {
     }
 
 //    itemTransaction related functions
-    public static void newItemTransaction(int billID, int productID, int qty){
+    public static void addItemTransaction(int billID, int productID , int qty, int subtotal){
 
-        String sql = "INSERT INTO itemTransaction (billID, productID, qty) VALUES ( '%d', '%d', '%d')";
-        sql = String.format(sql, billID, productID, qty);
+        String sql = "INSERT INTO itemTransaction (billID, productID, qty, subtotal) VALUES ('%d','%d','%d','%d')";
+        sql = String.format(sql, billID, productID, qty, subtotal);
 
         executeSQL(sql);
 
@@ -206,6 +256,41 @@ public class Database {
 
         return rs;
 
+    }
+
+
+    public static ArrayList<ItemTransaction> getAllItemTransactionCurrBill(int currBillID){
+        ArrayList<ItemTransaction> ItemTransactionList = new ArrayList<>();
+        try {
+            String sql = "SELECT * From itemtransaction WHERE billID = "+currBillID;
+            ResultSet rs = conn.createStatement().executeQuery(sql);
+            while (rs.next()){
+                ItemTransactionList.add(new ItemTransaction(rs.getInt("itemID"),rs.getInt("billID")
+                        , rs.getInt("productID"), rs.getInt("qty"), rs.getInt("subtotal")));
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return ItemTransactionList;
+    }
+
+    public static int sumItemTransaction(int currBillID){
+        String sql = " SELECT SUM(subtotal) AS total FROM itemTransaction where billID = '%d'";
+        sql = String.format(sql, currBillID);
+
+        try {
+            rs = conn.createStatement().executeQuery(sql);
+            rs.next();
+            int total = rs.getInt("total");
+            System.out.println("total"+total);
+            return total;
+
+//            return records;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0;
+        }
     }
 
 //    store related fucntions
@@ -379,7 +464,6 @@ public class Database {
             while(rs.next()){
                 System.out.println(rs.getString("transactionID"));
             }
-//            conn.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
