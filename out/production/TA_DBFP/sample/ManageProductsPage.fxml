@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="649.0" prefWidth="942.0" xmlns="http://javafx.com/javafx/8.0.999-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.ManageProductsController">
+<AnchorPane prefHeight="649.0" prefWidth="942.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.ManageProductsController">
    <children>
       <TableView fx:id="productTableView" layoutX="38.0" layoutY="124.0" prefHeight="335.0" prefWidth="608.0">
         <columns>
@@ -24,6 +21,6 @@
             <Font name="Arial Black" size="21.0" />
          </font>
       </Label>
-      <Button layoutX="23.0" layoutY="24.0" mnemonicParsing="false" onAction="#homeButtonClicked" text="HOME" />
+      <Button layoutX="38.0" layoutY="45.0" mnemonicParsing="false" onAction="#homeButtonClicked" text="HOME" />
    </children>
 </AnchorPane>
