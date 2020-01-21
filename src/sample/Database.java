@@ -90,7 +90,7 @@ public class Database {
 
     }
 
-    public static int checkLastBill(int currbillID) {
+    public static boolean lastBillEmpty(int currbillID) {
         String sql = " SELECT cashierID FROM bill WHERE billID = '%d' AS lastCashier";
         sql = String.format(sql, currbillID);
 
@@ -99,12 +99,12 @@ public class Database {
             rs.next();
             int lastCashier = rs.getInt("lastCashier");
             System.out.println("lastCashier"+lastCashier);
-            return lastCashier;
+            return false;
 
 //            return records;
         } catch (SQLException e) {
 //            e.printStackTrace();
-            return 0;
+            return true;
         }
     }
 
@@ -222,31 +222,59 @@ public class Database {
     }
 
 //    itemTransaction related functions
-    public static void addItemTransaction(int billID, int productID , int qty, int subtotal){
+    public static void addItemTransaction(int billID, int productID , int qty){
 
-        String sql = "INSERT INTO itemTransaction (billID, productID, qty, subtotal) VALUES ('%d','%d','%d','%d')";
-        sql = String.format(sql, billID, productID, qty, subtotal);
-
-        executeSQL(sql);
-
-    }
-
-    public static void updateItemTransaction(int transactionID, int billID, int productID, int qty){
-
-        String sql = "UPDATE itemTransaction set billID = '%d', productID = '%d', qty where transactionID = '%d'";
-        sql = String.format(sql, billID, productID, qty, transactionID);
+        String sql = "INSERT INTO itemTransaction (billID, productID, qty) VALUES ('%d','%d','%d')";
+        sql = String.format(sql, billID, productID, qty);
 
         executeSQL(sql);
 
     }
 
-    public static ResultSet getItemTransaction(int billID){
+    public static int itemTransactionExist(int billID, int productID){
 
-        String sql = "SELECT t.transactionID, t.qty, p.productName, p.productPrice FROM itemtransaction t INNER JOIN products p ON t.productID = p.productID WHERE billID = '%d'";
-        sql = String.format(sql, billID);
+        String sql = " SELECT qty FROM itemtransaction " +
+                "WHERE billID = '%d' AND productID = '%d'";
+        sql = String.format(sql, billID, productID);
 
-        try{
-//            conn = connect();
+        try {
+            rs = conn.createStatement().executeQuery(sql);
+            rs.next();
+            int qtyprev = rs.getInt("qty");
+            System.out.println("qtyprevdb "+qtyprev);
+            return qtyprev;
+
+//            return records;
+        } catch (SQLException e) {
+//            e.printStackTrace();
+            return 0;
+        }
+    }
+
+    public static void updateItemTransaction(int billID, int productID, int newQty){
+
+        String sql = "UPDATE itemTransaction set qty = '%d' WHERE billID = '%d' AND productID = '%d'";
+        sql = String.format(sql, newQty, billID,productID);
+
+        executeSQL(sql);
+    }
+
+    public static void deleteItemTransaction(int selectedProductID, int billID){
+        String sql = "DELETE FROM itemtransaction WHERE productID = '%d' AND billID = '%d'";
+        sql = String.format(sql, selectedProductID, billID);
+
+        executeSQL(sql);
+
+    }
+
+    public static ResultSet getAllItemTransactions(int currBillID) {
+
+        String sql = "SELECT i.productID, p.productName, p.productPrice, i.qty FROM itemtransaction i\n" +
+                "     INNER JOIN products p on i.productID = p.productID \n" +
+                "     WHERE i.billID = '%d'";
+        sql = String.format(sql, currBillID);
+
+        try {
             rs = conn.createStatement().executeQuery(sql);
 
         } catch (SQLException e) {
@@ -256,41 +284,6 @@ public class Database {
 
         return rs;
 
-    }
-
-
-    public static ArrayList<ItemTransaction> getAllItemTransactionCurrBill(int currBillID){
-        ArrayList<ItemTransaction> ItemTransactionList = new ArrayList<>();
-        try {
-            String sql = "SELECT * From itemtransaction WHERE billID = "+currBillID;
-            ResultSet rs = conn.createStatement().executeQuery(sql);
-            while (rs.next()){
-                ItemTransactionList.add(new ItemTransaction(rs.getInt("itemID"),rs.getInt("billID")
-                        , rs.getInt("productID"), rs.getInt("qty"), rs.getInt("subtotal")));
-
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return ItemTransactionList;
-    }
-
-    public static int sumItemTransaction(int currBillID){
-        String sql = " SELECT SUM(subtotal) AS total FROM itemTransaction where billID = '%d'";
-        sql = String.format(sql, currBillID);
-
-        try {
-            rs = conn.createStatement().executeQuery(sql);
-            rs.next();
-            int total = rs.getInt("total");
-            System.out.println("total"+total);
-            return total;
-
-//            return records;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return 0;
-        }
     }
 
 //    store related fucntions

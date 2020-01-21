@@ -6,14 +6,12 @@ public class ItemTransaction {
     private int billID;
     private int productID;
     private int qty;
-    private int subtotal;
 
-    public ItemTransaction(int itemID, int billID, int productID, int qty, int subtotal){
+    public ItemTransaction(int itemID, int billID, int productID, int qty){
         this.itemID = itemID;
         this.billID = billID;
         this.productID = productID;
         this.qty = qty;
-        this.subtotal = subtotal;
     }
 
 
@@ -31,14 +29,6 @@ public class ItemTransaction {
 
     public void setQty(int qty) {
         this.qty = qty;
-    }
-
-    public int getSubtotal() {
-        return subtotal;
-    }
-
-    public void setSubtotal(int subtotal) {
-        this.subtotal = subtotal;
     }
 
     public int getBillID() {
