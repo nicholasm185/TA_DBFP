@@ -75,7 +75,6 @@ public class Database {
 
 //    bill related functions
     public static void newBill(int cashierID, int storeID, int paymentTypeID){
-
         String sql = "INSERT INTO bill (cashierID, storeID, paymentTypeID) values ('%d', '%d', '%d')";
 
         try {
@@ -113,14 +112,8 @@ public class Database {
 
     public static void addInitBill() {
         String sql = "INSERT INTO bill (cashierID, storeID, paymentTypeID) values (null,null,null)";
-//        System.out.println("cashierID"+cashierID);
-//        System.out.println("storeID"+storeID);
-//        System.out.println("paymentTypeID"+paymentTypeID);d
         try {
-//            conn = connect();
             stmt = conn.createStatement();
-
-//            sql = String.format(sql,NULL,);
             stmt.execute(sql);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -157,7 +150,6 @@ public class Database {
         ActualBill bill;
 
         try{
-//            conn = connect();
             rs = conn.createStatement().executeQuery(sql);
 
             rs.next();
@@ -184,7 +176,6 @@ public class Database {
                 "ORDER BY b.billID ASC";
 
         try{
-//            conn = connect();
             rs = conn.createStatement().executeQuery(sql);
 
         } catch (SQLException e) {
@@ -205,7 +196,6 @@ public class Database {
                 "WHERE b.transactionTime BETWEEN \'" + startDate + "\' and \'" + endDate +"\' AND s.StoreName = \'" + storeName + "\'";
 
         try{
-//            conn = connect();
             rs = conn.createStatement().executeQuery(sql);
 
         } catch (SQLException e) {

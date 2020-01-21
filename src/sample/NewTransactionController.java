@@ -36,8 +36,6 @@ public class NewTransactionController implements Initializable {
     @FXML private TableColumn<Product, String> productNameInvenCol;
     @FXML private TableColumn<Product, String> priceInvenCol;
 
-//    @FXML private ComboBox<Integer> qtyCombo;
-
     @FXML private TableView<ItemTransactionCart> cartTable;
     @FXML private TableColumn<ItemTransactionCart, Integer> productIDCartCol;
     @FXML private TableColumn<ItemTransactionCart, String> productNameCartCol;
@@ -74,7 +72,6 @@ public class NewTransactionController implements Initializable {
 
 //      INVENTORY TABLE
         currentBillNumber = Database.getBillNumber();
-//        System.out.println("currBillNum"+currentBillNumber);
         productIDInvenCol.setCellValueFactory(new PropertyValueFactory<>("productID"));
         productNameInvenCol.setCellValueFactory(new PropertyValueFactory<>("productName"));
         priceInvenCol.setCellValueFactory(new PropertyValueFactory<>("productPrice"));
@@ -117,17 +114,12 @@ public class NewTransactionController implements Initializable {
             System.out.println("no data");
         }
 
-
-
-//         Database.sumItemTransaction(currentBillNumber);
-//        System.out.println("TOTAL"+this.total);
         totalLabel.setText("TOTAL " + this.total);
 
     }
-    //
+
     @FXML
     public void addItemButtonClicked(){
-//        System.out.println("addItemButtonClicked");
         try {
             Product selected = inventoryTable.getSelectionModel().getSelectedItem();
 
@@ -205,14 +197,6 @@ public class NewTransactionController implements Initializable {
     }
 
     public void homeButtonClicked(ActionEvent event) throws IOException {
-//        System.out.println("HOME Btn Clicked");
-
-
-//        System.out.println("deleteItemTransaction");
-//        Database.deleteItemTransactionByBill(currentBillNumber);
-
-
-
         FXMLLoader loader = new FXMLLoader();
 
         String fxml;
