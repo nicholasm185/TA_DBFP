@@ -90,15 +90,18 @@ public class Database {
 
     }
 
-    public static boolean lastBillEmpty(int currbillID) {
-        String sql = " SELECT cashierID FROM bill WHERE billID = '%d' AS lastCashier";
+    public static boolean lastBillHaveNulls(int currbillID) {
+        String sql = " SELECT cashierID FROM bill WHERE billID = '%d'";
         sql = String.format(sql, currbillID);
 
         try {
             rs = conn.createStatement().executeQuery(sql);
             rs.next();
-            int lastCashier = rs.getInt("lastCashier");
-            System.out.println("lastCashier"+lastCashier);
+//            int lastCashier =;
+            System.out.println("cashierID"+ rs.getInt("cashierID"));
+            if (rs.getInt("cashierID") == 0){
+                return true;
+            }
             return false;
 
 //            return records;
@@ -295,13 +298,30 @@ public class Database {
             ResultSet rs = conn.createStatement().executeQuery(sql);
 
             while (rs.next()){
-                listofTypes.add(rs.getString("StoreID") + " "+ rs.getString("StoreName"));
+                listofTypes.add(rs.getString("StoreName"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return listofTypes;
     }
+
+    public static int getStoreID(String storeName){
+
+        String sql = "SELECT storeID FROM store WHERE storeName = '%s'";
+        sql = String.format(sql, storeName);
+
+        try {
+            rs = conn.createStatement().executeQuery(sql);
+            rs.next();
+            return rs.getInt("storeID");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0;
+        }
+
+    }
+
 
 //    cashier related functions
     public static ArrayList<Cashier> getAllCashier(){
@@ -319,6 +339,22 @@ public class Database {
             e.printStackTrace();
         }
         return cashierList;
+    }
+
+    public static int getCashierID(String cashierName){
+
+        String sql = "SELECT cashierID FROM cashier WHERE cashierName = '%s'";
+        sql = String.format(sql, cashierName);
+
+        try {
+            rs = conn.createStatement().executeQuery(sql);
+            rs.next();
+            return rs.getInt("cashierID");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0;
+        }
     }
 
     public static ArrayList<String> getCashierNames(){
@@ -446,6 +482,40 @@ public class Database {
         return paymentNames;
 
     }
+
+    public static int getPaymentID(String paymentName){
+
+        String sql = "SELECT paymentTypeID FROM paymenttype WHERE paymentName = '%s'";
+        sql = String.format(sql, paymentName);
+
+        try {
+            rs = conn.createStatement().executeQuery(sql);
+            rs.next();
+            return rs.getInt("paymentTypeID");
+//            return records;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0;
+        }
+
+    }
+
+    public static ArrayList<String> getAllPaymentTypes() throws NullPointerException {
+        ArrayList<String> listofTypes = new ArrayList<>();
+        try {
+            String sql = "SELECT * FROM paymenttype";
+            ResultSet rs = conn.createStatement().executeQuery(sql);
+
+            while (rs.next()){
+                listofTypes.add(rs.getString("paymentName"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return listofTypes;
+
+    }
+
 
     public static void testconnect(){
 

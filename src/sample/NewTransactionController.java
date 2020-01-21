@@ -51,14 +51,7 @@ public class NewTransactionController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        currentBillNumber = Database.getBillNumber();
-        if (!Database.lastBillEmpty(currentBillNumber)){
-            System.out.println("AddInitialBill");
-            Database.addInitBill();
-        }
-        else{
-            System.out.println("Recover unfinished transaction");
-        }
+
         refresh();
     }
 
@@ -66,16 +59,22 @@ public class NewTransactionController implements Initializable {
     public void passData(String username, String role){
         this.username = username;
         this.role = role;
-        System.out.println("username "+username);
-        System.out.println("role "+role);
     }
 
     @FXML
     public void refresh(){
+        currentBillNumber = Database.getBillNumber();
+        if (Database.lastBillHaveNulls(currentBillNumber)){
+            System.out.println("Recover unfinished transaction");
+        }
+        else{
+            System.out.println("AddInitialBill");
+            Database.addInitBill();
+        }
 
 //      INVENTORY TABLE
         currentBillNumber = Database.getBillNumber();
-        System.out.println("currBillNum"+currentBillNumber);
+//        System.out.println("currBillNum"+currentBillNumber);
         productIDInvenCol.setCellValueFactory(new PropertyValueFactory<>("productID"));
         productNameInvenCol.setCellValueFactory(new PropertyValueFactory<>("productName"));
         priceInvenCol.setCellValueFactory(new PropertyValueFactory<>("productPrice"));
@@ -121,14 +120,14 @@ public class NewTransactionController implements Initializable {
 
 
 //         Database.sumItemTransaction(currentBillNumber);
-        System.out.println("TOTAL"+this.total);
+//        System.out.println("TOTAL"+this.total);
         totalLabel.setText("TOTAL " + this.total);
 
     }
     //
     @FXML
     public void addItemButtonClicked(){
-        System.out.println("addItemButtonClicked");
+//        System.out.println("addItemButtonClicked");
         try {
             Product selected = inventoryTable.getSelectionModel().getSelectedItem();
 
@@ -178,36 +177,35 @@ public class NewTransactionController implements Initializable {
 
     @FXML
     public void checkOutButtonClicked(){
-        System.out.println("checkOutButtonClicked");
-//        int billID = currentBillNumber;
-////        String transactionTime =dateFormat.format(date);
-//        int cashierID = Database.getCashierID(username);
-//
-//
-//        try {
-//            FXMLLoader loader = new FXMLLoader();
-//            loader.setLocation(getClass().getResource("CheckOutPage.fxml"));
-//            Parent CheckOutParent = loader.load();
-//
-//            Stage stage = new Stage(); // New stage (window)
-//
-//            CheckOutController controller = loader.getController();
-//            controller.passData(this, billID, cashierID);
-//
-//            // Setting the stage up
-//            stage.initModality(Modality.APPLICATION_MODAL);
-//            stage.setResizable(false);
-//            stage.setTitle("Check Out");
-//            stage.setScene(new Scene(CheckOutParent));
-//            stage.showAndWait();
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+//        System.out.println("checkOutButtonClicked");
+        int billID = currentBillNumber;
+        int cashierID = Database.getCashierID(username);
+
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("CheckOutPage.fxml"));
+            Parent CheckOutParent = loader.load();
+
+            Stage stage = new Stage(); // New stage (window)
+
+            CheckOutController controller = loader.getController();
+            controller.passData(this, billID, cashierID);
+
+            // Setting the stage up
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setResizable(false);
+            stage.setTitle("Check Out");
+            stage.setScene(new Scene(CheckOutParent));
+            stage.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        refresh();
     }
 
     public void homeButtonClicked(ActionEvent event) throws IOException {
-        System.out.println("HOME Btn Clicked");
+//        System.out.println("HOME Btn Clicked");
 
 
 //        System.out.println("deleteItemTransaction");
