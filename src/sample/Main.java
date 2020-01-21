@@ -19,6 +19,7 @@ public class Main extends Application {
         primaryStage.setResizable(false);
         primaryStage.setScene(new Scene(root, 489, 311));
         primaryStage.show();
+        Database.getCredentials();
         Database.connect();
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
