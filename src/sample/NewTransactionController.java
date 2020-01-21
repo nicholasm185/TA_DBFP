@@ -19,6 +19,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class NewTransactionController implements Initializable {
@@ -36,45 +38,19 @@ public class NewTransactionController implements Initializable {
 
 //    @FXML private ComboBox<Integer> qtyCombo;
 
-    @FXML private TableView<ItemTransaction> cartTable;
-    @FXML private TableColumn<ItemTransaction, String> productIDCartCol;
-    @FXML private TableColumn<ItemTransaction, String> productNameCartCol;
-    @FXML private TableColumn<ItemTransaction, String> priceCartCol;
-    @FXML private TableColumn<ItemTransaction, String> qtyCartCol;
-    @FXML private TableColumn<ItemTransaction, String> subtotalCartCol;
+    @FXML private TableView<ItemTransactionCart> cartTable;
+    @FXML private TableColumn<ItemTransactionCart, Integer> productIDCartCol;
+    @FXML private TableColumn<ItemTransactionCart, String> productNameCartCol;
+    @FXML private TableColumn<ItemTransactionCart, Integer> priceCartCol;
+    @FXML private TableColumn<ItemTransactionCart, Integer> qtyCartCol;
+    @FXML private TableColumn<ItemTransactionCart, Integer> subtotalCartCol;
 
     private ObservableList<Product> inventoryList = FXCollections.observableArrayList();
-    private ObservableList<ItemTransaction> cartList = FXCollections.observableArrayList();
+    private ObservableList<ItemTransactionCart> cartList = FXCollections.observableArrayList();
     @FXML private TextField qtyField;
-
-//    private Date date = new Date(); // this object controains the current date value
-//    private SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        if (Database.checkLastBill(currentBillNumber) == 0){
-        System.out.println("AddInitialBill");
-//        Database.deleteBill(currentBillNumber);
-        Database.addInitBill();
-
-        }
-        currentBillNumber = Database.getBillNumber();
-        System.out.println("currBillNum"+currentBillNumber);
-        productIDInvenCol.setCellValueFactory(new PropertyValueFactory<>("productID"));
-        productNameInvenCol.setCellValueFactory(new PropertyValueFactory<>("productName"));
-        priceInvenCol.setCellValueFactory(new PropertyValueFactory<>("productPrice"));
-
-//        -----------------------------------------------------------------------------------
-//        qtyCombo.setItems(FXCollections.observableArrayList(1,2,3,4,5));
-//        qtyCombo.setValue(1);
-
-//        -----------------------------------------------------------------------------------
-
-//        productIDCartCol.setCellValueFactory(new PropertyValueFactory<>("productID"));
-////        productNameCartCol.setCellValueFactory(new PropertyValueFactory<>("productName"));
-////        priceCartCol.setCellValueFactory(new PropertyValueFactory<>("productPrice"));
-//        qtyCartCol.setCellValueFactory(new PropertyValueFactory<>("qty"));
-//        subtotalCartCol.setCellValueFactory(new PropertyValueFactory<>("subtotal"));
 
         refresh();
     }
@@ -83,32 +59,75 @@ public class NewTransactionController implements Initializable {
     public void passData(String username, String role){
         this.username = username;
         this.role = role;
-        System.out.println("username "+username);
-        System.out.println("role "+role);
     }
 
     @FXML
     public void refresh(){
-        System.out.println("refreshparent");
+        currentBillNumber = Database.getBillNumber();
+        if (Database.lastBillHaveNulls(currentBillNumber)){
+            System.out.println("Recover unfinished transaction");
+        }
+        else{
+            System.out.println("AddInitialBill");
+            Database.addInitBill();
+        }
+
+//      INVENTORY TABLE
+        currentBillNumber = Database.getBillNumber();
+//        System.out.println("currBillNum"+currentBillNumber);
+        productIDInvenCol.setCellValueFactory(new PropertyValueFactory<>("productID"));
+        productNameInvenCol.setCellValueFactory(new PropertyValueFactory<>("productName"));
+        priceInvenCol.setCellValueFactory(new PropertyValueFactory<>("productPrice"));
 
 
         inventoryList.clear();
         inventoryList.addAll(Database.getAllProducts());
         inventoryTable.setItems(inventoryList);
 
-        cartList.clear();
-        cartList.addAll(Database.getAllItemTransactionCurrBill(currentBillNumber));
-        cartTable.setItems(cartList);
+//      CART TABLE
+        ResultSet rs;
+        rs = Database.getAllItemTransactions(currentBillNumber);
 
-//        this.total = Database.sumItemTransaction(currentBillNumber);
+        try {
+            cartList.clear();
+            this.total = 0;
+
+            while (rs.next()) {
+                int subtotal_cart = rs.getInt("productPrice")*rs.getInt("qty");
+                this.total += subtotal_cart;
+
+                cartList.add(new ItemTransactionCart(rs.getInt("productID"),
+
+                        rs.getString("productName"), rs.getInt("productPrice")
+                , rs.getInt("qty"), subtotal_cart));
+            }
+
+            rs.close();
+
+            productIDCartCol.setCellValueFactory(new PropertyValueFactory<>("productID"));
+            productNameCartCol.setCellValueFactory(new PropertyValueFactory<>("productName"));
+            priceCartCol.setCellValueFactory(new PropertyValueFactory<>("productPrice"));
+            qtyCartCol.setCellValueFactory(new PropertyValueFactory<>("qty"));
+            subtotalCartCol.setCellValueFactory(new PropertyValueFactory<>("subtotal"));
+            cartTable.setItems(cartList);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (NullPointerException e){
+            System.out.println("no data");
+        }
+
+
+
+//         Database.sumItemTransaction(currentBillNumber);
 //        System.out.println("TOTAL"+this.total);
-//        totalLabel.setText("TOTAL " + this.total);
+        totalLabel.setText("TOTAL " + this.total);
 
     }
     //
     @FXML
     public void addItemButtonClicked(){
-        System.out.println("addItemButtonClicked");
+//        System.out.println("addItemButtonClicked");
         try {
             Product selected = inventoryTable.getSelectionModel().getSelectedItem();
 
@@ -118,19 +137,23 @@ public class NewTransactionController implements Initializable {
             int productPrice = selected.getProductPrice();
             int qty = 1;
 
-            String qtytf = qtyField.getText();
-            System.out.println("qtytf"+qtytf);
-            if (!qtytf.equals("")){
-                qty = Integer.parseInt(qtytf);
+            String qtytxtfield = qtyField.getText();
+            if (!qtytxtfield.equals("")){
+                qty = Integer.parseInt(qtytxtfield);
             }
-            int subtotal = productPrice * qty;
 
-            System.out.println("billID"+billID);
-            System.out.println("ID"+productID);
-            System.out.println("Price"+productPrice);
-            System.out.println("subtotal"+subtotal);
-
-            Database.addItemTransaction(billID, productID, qty, subtotal);
+//            if item not found, then add new item transaction
+            int itemQty = Database.itemTransactionExist(currentBillNumber,productID);
+            if (itemQty == 0){
+                System.out.println("item does not exist, PrevitemQty = "+itemQty);
+                Database.addItemTransaction(billID, productID, qty);
+            }
+//            otherwise update item transaction qty
+            else{
+                System.out.println("item exists, PrevitemQty = "+ itemQty);
+                int newQty = itemQty + qty;
+                Database.updateItemTransaction(currentBillNumber, productID, newQty);
+            }
             refresh();
 
 
@@ -142,48 +165,47 @@ public class NewTransactionController implements Initializable {
     @FXML
     public void deleteItemButtonClicked(){
 
-//        try{
-//            ItemTransaction selected = cartTable.getSelectionModel().getSelectedItem();
-//            Database.deleteItemTransaction(selected.getItemID());
-//            refresh();
-//
-//        } catch (NullPointerException e){
-//            System.out.println("no selection");
-//        }
+        try{
+            ItemTransactionCart selected = cartTable.getSelectionModel().getSelectedItem();
+            Database.deleteItemTransaction(selected.getProductID(),currentBillNumber);
+            refresh();
+
+        } catch (NullPointerException e){
+            System.out.println("no selection");
+        }
     }
 
     @FXML
     public void checkOutButtonClicked(){
-        System.out.println("checkOutButtonClicked");
-//        int billID = currentBillNumber;
-////        String transactionTime =dateFormat.format(date);
-//        int cashierID = Database.getCashierID(username);
-//
-//
-//        try {
-//            FXMLLoader loader = new FXMLLoader();
-//            loader.setLocation(getClass().getResource("CheckOutPage.fxml"));
-//            Parent CheckOutParent = loader.load();
-//
-//            Stage stage = new Stage(); // New stage (window)
-//
-//            CheckOutController controller = loader.getController();
-//            controller.passData(this, billID, cashierID);
-//
-//            // Setting the stage up
-//            stage.initModality(Modality.APPLICATION_MODAL);
-//            stage.setResizable(false);
-//            stage.setTitle("Check Out");
-//            stage.setScene(new Scene(CheckOutParent));
-//            stage.showAndWait();
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+//        System.out.println("checkOutButtonClicked");
+        int billID = currentBillNumber;
+        int cashierID = Database.getCashierID(username);
+
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("CheckOutPage.fxml"));
+            Parent CheckOutParent = loader.load();
+
+            Stage stage = new Stage(); // New stage (window)
+
+            CheckOutController controller = loader.getController();
+            controller.passData(this, billID, cashierID);
+
+            // Setting the stage up
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setResizable(false);
+            stage.setTitle("Check Out");
+            stage.setScene(new Scene(CheckOutParent));
+            stage.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        refresh();
     }
 
     public void homeButtonClicked(ActionEvent event) throws IOException {
-        System.out.println("HOME Btn Clicked");
+//        System.out.println("HOME Btn Clicked");
 
 
 //        System.out.println("deleteItemTransaction");

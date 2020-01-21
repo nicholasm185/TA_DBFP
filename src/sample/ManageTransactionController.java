@@ -117,8 +117,12 @@ public class ManageTransactionController implements Initializable {
             stage.setTitle("Items Transaction for bill " + selectedBill.getBillID());
             stage.setScene(new Scene(ItemsTransactionParent));
             stage.showAndWait();
+
         }catch (NullPointerException e){
+            e.printStackTrace();
             System.out.println("no bill selected");
+        }catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

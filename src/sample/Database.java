@@ -105,21 +105,24 @@ public class Database {
 
     }
 
-    public static int checkLastBill(int currbillID) {
-        String sql = " SELECT cashierID FROM bill WHERE billID = '%d' AS lastCashier";
+    public static boolean lastBillHaveNulls(int currbillID) {
+        String sql = " SELECT cashierID FROM bill WHERE billID = '%d'";
         sql = String.format(sql, currbillID);
 
         try {
             rs = conn.createStatement().executeQuery(sql);
             rs.next();
-            int lastCashier = rs.getInt("lastCashier");
-            System.out.println("lastCashier"+lastCashier);
-            return lastCashier;
+//            int lastCashier =;
+            System.out.println("cashierID"+ rs.getInt("cashierID"));
+            if (rs.getInt("cashierID") == 0){
+                return true;
+            }
+            return false;
 
 //            return records;
         } catch (SQLException e) {
 //            e.printStackTrace();
-            return 0;
+            return true;
         }
     }
 
@@ -237,31 +240,59 @@ public class Database {
     }
 
 //    itemTransaction related functions
-    public static void addItemTransaction(int billID, int productID , int qty, int subtotal){
+    public static void addItemTransaction(int billID, int productID , int qty){
 
-        String sql = "INSERT INTO itemTransaction (billID, productID, qty, subtotal) VALUES ('%d','%d','%d','%d')";
-        sql = String.format(sql, billID, productID, qty, subtotal);
-
-        executeSQL(sql);
-
-    }
-
-    public static void updateItemTransaction(int transactionID, int billID, int productID, int qty){
-
-        String sql = "UPDATE itemTransaction set billID = '%d', productID = '%d', qty where transactionID = '%d'";
-        sql = String.format(sql, billID, productID, qty, transactionID);
+        String sql = "INSERT INTO itemTransaction (billID, productID, qty) VALUES ('%d','%d','%d')";
+        sql = String.format(sql, billID, productID, qty);
 
         executeSQL(sql);
 
     }
 
-    public static ResultSet getItemTransaction(int billID){
+    public static int itemTransactionExist(int billID, int productID){
 
-        String sql = "SELECT t.transactionID, t.qty, p.productName, p.productPrice FROM itemtransaction t INNER JOIN products p ON t.productID = p.productID WHERE billID = '%d'";
-        sql = String.format(sql, billID);
+        String sql = " SELECT qty FROM itemtransaction " +
+                "WHERE billID = '%d' AND productID = '%d'";
+        sql = String.format(sql, billID, productID);
 
-        try{
-//            conn = connect();
+        try {
+            rs = conn.createStatement().executeQuery(sql);
+            rs.next();
+            int qtyprev = rs.getInt("qty");
+            System.out.println("qtyprevdb "+qtyprev);
+            return qtyprev;
+
+//            return records;
+        } catch (SQLException e) {
+//            e.printStackTrace();
+            return 0;
+        }
+    }
+
+    public static void updateItemTransaction(int billID, int productID, int newQty){
+
+        String sql = "UPDATE itemTransaction set qty = '%d' WHERE billID = '%d' AND productID = '%d'";
+        sql = String.format(sql, newQty, billID,productID);
+
+        executeSQL(sql);
+    }
+
+    public static void deleteItemTransaction(int selectedProductID, int billID){
+        String sql = "DELETE FROM itemtransaction WHERE productID = '%d' AND billID = '%d'";
+        sql = String.format(sql, selectedProductID, billID);
+
+        executeSQL(sql);
+
+    }
+
+    public static ResultSet getAllItemTransactions(int currBillID) {
+
+        String sql = "SELECT i.productID, p.productName, p.productPrice, i.qty FROM itemtransaction i\n" +
+                "     INNER JOIN products p on i.productID = p.productID \n" +
+                "     WHERE i.billID = '%d'";
+        sql = String.format(sql, currBillID);
+
+        try {
             rs = conn.createStatement().executeQuery(sql);
 
         } catch (SQLException e) {
@@ -273,41 +304,6 @@ public class Database {
 
     }
 
-
-    public static ArrayList<ItemTransaction> getAllItemTransactionCurrBill(int currBillID){
-        ArrayList<ItemTransaction> ItemTransactionList = new ArrayList<>();
-        try {
-            String sql = "SELECT * From itemtransaction WHERE billID = "+currBillID;
-            ResultSet rs = conn.createStatement().executeQuery(sql);
-            while (rs.next()){
-                ItemTransactionList.add(new ItemTransaction(rs.getInt("itemID"),rs.getInt("billID")
-                        , rs.getInt("productID"), rs.getInt("qty"), rs.getInt("subtotal")));
-
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return ItemTransactionList;
-    }
-
-    public static int sumItemTransaction(int currBillID){
-        String sql = " SELECT SUM(subtotal) AS total FROM itemTransaction where billID = '%d'";
-        sql = String.format(sql, currBillID);
-
-        try {
-            rs = conn.createStatement().executeQuery(sql);
-            rs.next();
-            int total = rs.getInt("total");
-            System.out.println("total"+total);
-            return total;
-
-//            return records;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return 0;
-        }
-    }
-
 //    store related fucntions
     public static ArrayList<String> getAllStores() throws NullPointerException {
         ArrayList<String> listofTypes = new ArrayList<>();
@@ -317,13 +313,30 @@ public class Database {
             ResultSet rs = conn.createStatement().executeQuery(sql);
 
             while (rs.next()){
-                listofTypes.add(rs.getString("StoreID") + " "+ rs.getString("StoreName"));
+                listofTypes.add(rs.getString("StoreName"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return listofTypes;
     }
+
+    public static int getStoreID(String storeName){
+
+        String sql = "SELECT storeID FROM store WHERE storeName = '%s'";
+        sql = String.format(sql, storeName);
+
+        try {
+            rs = conn.createStatement().executeQuery(sql);
+            rs.next();
+            return rs.getInt("storeID");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0;
+        }
+
+    }
+
 
 //    cashier related functions
     public static ArrayList<Cashier> getAllCashier(){
@@ -341,6 +354,22 @@ public class Database {
             e.printStackTrace();
         }
         return cashierList;
+    }
+
+    public static int getCashierID(String cashierName){
+
+        String sql = "SELECT cashierID FROM cashier WHERE cashierName = '%s'";
+        sql = String.format(sql, cashierName);
+
+        try {
+            rs = conn.createStatement().executeQuery(sql);
+            rs.next();
+            return rs.getInt("cashierID");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0;
+        }
     }
 
     public static ArrayList<String> getCashierNames(){
@@ -468,6 +497,40 @@ public class Database {
         return paymentNames;
 
     }
+
+    public static int getPaymentID(String paymentName){
+
+        String sql = "SELECT paymentTypeID FROM paymenttype WHERE paymentName = '%s'";
+        sql = String.format(sql, paymentName);
+
+        try {
+            rs = conn.createStatement().executeQuery(sql);
+            rs.next();
+            return rs.getInt("paymentTypeID");
+//            return records;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0;
+        }
+
+    }
+
+    public static ArrayList<String> getAllPaymentTypes() throws NullPointerException {
+        ArrayList<String> listofTypes = new ArrayList<>();
+        try {
+            String sql = "SELECT * FROM paymenttype";
+            ResultSet rs = conn.createStatement().executeQuery(sql);
+
+            while (rs.next()){
+                listofTypes.add(rs.getString("paymentName"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return listofTypes;
+
+    }
+
 
     public static void testconnect(){
 

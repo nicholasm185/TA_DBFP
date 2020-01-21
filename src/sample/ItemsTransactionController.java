@@ -22,12 +22,15 @@ public class ItemsTransactionController implements Initializable {
     int billID;
     int total = 0;
 
-    @FXML private TableView<ItemTransaction> transactionTable;
-    @FXML private TableColumn<ItemTransaction, Integer> transactionIDCol;
-    @FXML private TableColumn<ItemTransaction, String> productNameCol;
-    @FXML private TableColumn<ItemTransaction, Integer> qtyCol;
-    @FXML private TableColumn<ItemTransaction, Integer> subTotCol;
-    ObservableList<ItemTransaction> transactionList = FXCollections.observableArrayList();
+    ObservableList<ItemTransactionCart> cartList = FXCollections.observableArrayList();
+
+
+    @FXML private TableView<ItemTransactionCart> cartTable;
+    @FXML private TableColumn<ItemTransactionCart, String> productIDCartCol;
+    @FXML private TableColumn<ItemTransactionCart, String> productNameCartCol;
+    @FXML private TableColumn<ItemTransactionCart, String> priceCartCol;
+    @FXML private TableColumn<ItemTransactionCart, String> qtyCartCol;
+    @FXML private TableColumn<ItemTransactionCart, String> subtotalCartCol;
 
     @FXML private Label totalPay;
 
@@ -42,34 +45,35 @@ public class ItemsTransactionController implements Initializable {
     }
 
     public void getTransactions(){
-//        ResultSet rs = Database.getItemTransaction(this.billID);
-//        System.out.println("here");
-//        System.out.println("selected bill is" + this.billID);
-//
-//        try {
-//            while (rs.next()){
-//                System.out.println("now here");
-//                int qty = rs.getInt("qty");
-//                int price = rs.getInt("productPrice");
-//                int subtotal = price*qty;
-//                transactionList.add(new ItemTransaction(rs.getInt("itemID"), billID,
-//                        rs.getString("productName"), rs.getInt("transactionID"), qty, subtotal));
-//                total += subtotal;
-//            }
-//
-//            transactionIDCol.setCellValueFactory(new PropertyValueFactory<>("itemID"));
-//            productNameCol.setCellValueFactory(new PropertyValueFactory<>("productName"));
-//            qtyCol.setCellValueFactory(new PropertyValueFactory<>("qty"));
-//            subTotCol.setCellValueFactory(new PropertyValueFactory<>("sub_total"));
-//            transactionTable.setItems(transactionList);
-//
-//            totalPay.setText("Rp." + total);
-//
-//        } catch (NullPointerException e){
-//            System.out.println("no data");
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
+        ResultSet rs;
+        rs = Database.getAllItemTransactions(billID);
+        try {
+            cartList.clear();
+            this.total = 0;
+
+            while (rs.next()) {
+                int subtotal_cart = rs.getInt("productPrice")*rs.getInt("qty");
+                this.total += subtotal_cart;
+
+                cartList.add(new ItemTransactionCart(rs.getInt("productID"),
+                        rs.getString("productName"), rs.getInt("productPrice")
+                        , rs.getInt("qty"), subtotal_cart));
+            }
+            rs.close();
+
+            productIDCartCol.setCellValueFactory(new PropertyValueFactory<>("productID"));
+            productNameCartCol.setCellValueFactory(new PropertyValueFactory<>("productName"));
+            priceCartCol.setCellValueFactory(new PropertyValueFactory<>("productPrice"));
+            qtyCartCol.setCellValueFactory(new PropertyValueFactory<>("qty"));
+            subtotalCartCol.setCellValueFactory(new PropertyValueFactory<>("subtotal"));
+            cartTable.setItems(cartList);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (NullPointerException e){
+            System.out.println("no data");
+        }
+        totalPay.setText("Rp. " + this.total);
     }
 
     public void closeButtonClicked(ActionEvent event){
