@@ -21,7 +21,7 @@
         <Button fx:id="addItemButton" layoutX="608.0" layoutY="176.0" mnemonicParsing="false" onAction="#addItemButtonClicked" prefHeight="56.0" prefWidth="160.0" text="Add Item" />
         <Button fx:id="deleteItemButton" layoutX="608.0" layoutY="288.0" mnemonicParsing="false" onAction="#deleteItemButtonClicked" prefHeight="56.0" prefWidth="160.0" text="Delete Item" />
         <Button layoutX="608.0" layoutY="404.0" mnemonicParsing="false" onAction="#checkOutButtonClicked" prefHeight="56.0" prefWidth="160.0" text="CheckOut" />
-      <Button layoutX="35.0" layoutY="30.0" mnemonicParsing="false" onAction="#homeButtonClicked" text="HOME" />
+      <Button fx:id="homeButton" layoutX="35.0" layoutY="30.0" mnemonicParsing="false" onAction="#homeButtonClicked" text="HOME" />
       <TableView fx:id="cartTable" layoutX="39.0" layoutY="298.0" prefHeight="260.0" prefWidth="526.0">
          <columns>
             <TableColumn fx:id="productIDCartCol" prefWidth="98.0" text="Product ID" />

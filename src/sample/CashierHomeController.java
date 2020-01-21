@@ -54,11 +54,14 @@ public class CashierHomeController implements Initializable {
         NewTransactionController controller = loader.getController();
         controller.passData(username,role);
 
+        Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        currentStage.close();
+
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setResizable(false);
         stage.setTitle("CheckOutPage");
         stage.setScene(new Scene(LoginPageParent));
-        stage.showAndWait();
+        stage.show();
     }
     @FXML
     public void passData(String username, String role){

@@ -9,10 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -29,6 +26,7 @@ public class NewTransactionController implements Initializable {
     String role;
     private int currentBillNumber;
     private int total;
+    @FXML private Button homeButton;
     @FXML private Label totalLabel;
 
     @FXML private TableView<Product> inventoryTable;
@@ -52,22 +50,25 @@ public class NewTransactionController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        refresh();
+//        refresh();
     }
 
     @FXML
     public void passData(String username, String role){
         this.username = username;
         this.role = role;
+        refresh();
     }
 
     @FXML
     public void refresh(){
         currentBillNumber = Database.getBillNumber();
-        if (Database.lastBillHaveNulls(currentBillNumber)){
+        if(currentBillNumber == 0){
+            System.out.println("first bill");
+            Database.addInitBill();
+        } else if (Database.lastBillHaveNulls(currentBillNumber)){
             System.out.println("Recover unfinished transaction");
-        }
-        else{
+        } else{
             System.out.println("AddInitialBill");
             Database.addInitBill();
         }
@@ -176,7 +177,7 @@ public class NewTransactionController implements Initializable {
     }
 
     @FXML
-    public void checkOutButtonClicked(){
+    public void checkOutButtonClicked() throws IOException {
 //        System.out.println("checkOutButtonClicked");
         int billID = currentBillNumber;
         int cashierID = Database.getCashierID(username);
@@ -201,17 +202,11 @@ public class NewTransactionController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        refresh();
+//        refresh();
+        homeButtonClicked();
     }
 
-    public void homeButtonClicked(ActionEvent event) throws IOException {
-//        System.out.println("HOME Btn Clicked");
-
-
-//        System.out.println("deleteItemTransaction");
-//        Database.deleteItemTransactionByBill(currentBillNumber);
-
-
+    public void homeButtonClicked() throws IOException {
 
         FXMLLoader loader = new FXMLLoader();
 
@@ -231,7 +226,7 @@ public class NewTransactionController implements Initializable {
         Parent AdminHomePageParent = loader.load();
         Stage stage = new Stage();
 
-        Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Stage currentStage = (Stage) homeButton.getScene().getWindow();
         currentStage.close();
 
         if (role.equals("Cashier")) {
