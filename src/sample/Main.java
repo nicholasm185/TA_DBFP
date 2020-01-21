@@ -19,6 +19,7 @@ public class Main extends Application {
         primaryStage.setResizable(false);
         primaryStage.setScene(new Scene(root, 489, 311));
         primaryStage.show();
+        Database.connect();
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent t) {
@@ -33,7 +34,7 @@ public class Main extends Application {
 
     public static void main(String[] args) {
 //        Database.testconnect();
-        Database.connect();
         launch(args);
+
     }
 }

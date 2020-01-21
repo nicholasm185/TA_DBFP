@@ -1,5 +1,8 @@
 package sample;
 
+import com.mysql.jdbc.exceptions.jdbc4.CommunicationsException;
+import javafx.scene.control.Alert;
+
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -16,6 +19,15 @@ public class Database {
         try {
             Class.forName(JDBC_DRIVER);
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
+        } catch (CommunicationsException e){
+            System.out.println("connection failed, check database status");
+
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Database Connection Error");
+            alert.setHeaderText("Could not connect to database");
+            alert.setContentText("Make sure the database is running");
+
+            alert.showAndWait();
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -24,8 +36,11 @@ public class Database {
     public static void close(){
         try{
             conn.close();
+            System.out.println("Connection successfully closed");
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (NullPointerException e){
+            System.out.println("Closing connection attempt failed");
         }
     }
 
