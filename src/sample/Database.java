@@ -258,7 +258,7 @@ public class Database {
 //    itemTransaction related functions
     public static void addItemTransaction(int billID, int productID , int qty){
 
-        String sql = "INSERT INTO itemTransaction (billID, productID, qty) VALUES ('%d','%d','%d')";
+        String sql = "INSERT INTO itemtransaction (billID, productID, qty) VALUES ('%d','%d','%d')";
         sql = String.format(sql, billID, productID, qty);
 
         executeSQL(sql);
@@ -287,7 +287,7 @@ public class Database {
 
     public static void updateItemTransaction(int billID, int productID, int newQty){
 
-        String sql = "UPDATE itemTransaction set qty = '%d' WHERE billID = '%d' AND productID = '%d'";
+        String sql = "UPDATE itemtransaction set qty = '%d' WHERE billID = '%d' AND productID = '%d'";
         sql = String.format(sql, newQty, billID,productID);
 
         executeSQL(sql);
@@ -329,7 +329,7 @@ public class Database {
             ResultSet rs = conn.createStatement().executeQuery(sql);
 
             while (rs.next()){
-                listofTypes.add(rs.getString("StoreName"));
+                listofTypes.add(rs.getString("StoreID") + " " + rs.getString("StoreName"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -501,7 +501,7 @@ public class Database {
 
         try {
 //            conn = connect();
-            String sql = "SELECT * FROM paymentType";
+            String sql = "SELECT * FROM paymenttype";
             ResultSet rs = conn.createStatement().executeQuery(sql);
 
             while (rs.next()){
