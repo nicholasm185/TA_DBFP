@@ -9,10 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -29,43 +26,60 @@ public class NewTransactionController implements Initializable {
     String role;
     private int currentBillNumber;
     private int total;
-    @FXML private Label totalLabel;
+    @FXML
+    private Button homeButton;
+    @FXML
+    private Label totalLabel;
 
-    @FXML private TableView<Product> inventoryTable;
-    @FXML private TableColumn<Product, String> productIDInvenCol;
-    @FXML private TableColumn<Product, String> productNameInvenCol;
-    @FXML private TableColumn<Product, String> priceInvenCol;
+    @FXML
+    private TableView<Product> inventoryTable;
+    @FXML
+    private TableColumn<Product, String> productIDInvenCol;
+    @FXML
+    private TableColumn<Product, String> productNameInvenCol;
+    @FXML
+    private TableColumn<Product, String> priceInvenCol;
 
-    @FXML private TableView<ItemTransactionCart> cartTable;
-    @FXML private TableColumn<ItemTransactionCart, Integer> productIDCartCol;
-    @FXML private TableColumn<ItemTransactionCart, String> productNameCartCol;
-    @FXML private TableColumn<ItemTransactionCart, Integer> priceCartCol;
-    @FXML private TableColumn<ItemTransactionCart, Integer> qtyCartCol;
-    @FXML private TableColumn<ItemTransactionCart, Integer> subtotalCartCol;
+    @FXML
+    private TableView<ItemTransactionCart> cartTable;
+    @FXML
+    private TableColumn<ItemTransactionCart, Integer> productIDCartCol;
+    @FXML
+    private TableColumn<ItemTransactionCart, String> productNameCartCol;
+    @FXML
+    private TableColumn<ItemTransactionCart, Integer> priceCartCol;
+    @FXML
+    private TableColumn<ItemTransactionCart, Integer> qtyCartCol;
+    @FXML
+    private TableColumn<ItemTransactionCart, Integer> subtotalCartCol;
 
     private ObservableList<Product> inventoryList = FXCollections.observableArrayList();
     private ObservableList<ItemTransactionCart> cartList = FXCollections.observableArrayList();
-    @FXML private TextField qtyField;
+    @FXML
+    private TextField qtyField;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+//        refresh();
+    }
+
+    @FXML
+    public void passData(String username, String role) {
+        this.username = username;
+        this.role = role;
         refresh();
     }
 
     @FXML
-    public void passData(String username, String role){
-        this.username = username;
-        this.role = role;
-    }
-
-    @FXML
-    public void refresh(){
+    public void refresh() {
         currentBillNumber = Database.getBillNumber();
-        if (Database.lastBillHaveNulls(currentBillNumber)){
+        if (currentBillNumber == 0) {
+            System.out.println("first bill");
+            Database.addInitBill();
+        } else if (Database.lastBillHaveNulls(currentBillNumber)) {
             System.out.println("Recover unfinished transaction");
-        }
-        else{
+        } else {
             System.out.println("AddInitialBill");
             Database.addInitBill();
         }
@@ -90,13 +104,13 @@ public class NewTransactionController implements Initializable {
             this.total = 0;
 
             while (rs.next()) {
-                int subtotal_cart = rs.getInt("productPrice")*rs.getInt("qty");
+                int subtotal_cart = rs.getInt("productPrice") * rs.getInt("qty");
                 this.total += subtotal_cart;
 
                 cartList.add(new ItemTransactionCart(rs.getInt("productID"),
 
                         rs.getString("productName"), rs.getInt("productPrice")
-                , rs.getInt("qty"), subtotal_cart));
+                        , rs.getInt("qty"), subtotal_cart));
             }
 
             rs.close();
@@ -110,7 +124,7 @@ public class NewTransactionController implements Initializable {
 
         } catch (SQLException e) {
             e.printStackTrace();
-        } catch (NullPointerException e){
+        } catch (NullPointerException e) {
             System.out.println("no data");
         }
 
@@ -119,7 +133,7 @@ public class NewTransactionController implements Initializable {
     }
 
     @FXML
-    public void addItemButtonClicked(){
+    public void addItemButtonClicked() {
         try {
             Product selected = inventoryTable.getSelectionModel().getSelectedItem();
 
@@ -130,45 +144,45 @@ public class NewTransactionController implements Initializable {
             int qty = 1;
 
             String qtytxtfield = qtyField.getText();
-            if (!qtytxtfield.equals("")){
+            if (!qtytxtfield.equals("")) {
                 qty = Integer.parseInt(qtytxtfield);
             }
 
 //            if item not found, then add new item transaction
-            int itemQty = Database.itemTransactionExist(currentBillNumber,productID);
-            if (itemQty == 0){
-                System.out.println("item does not exist, PrevitemQty = "+itemQty);
+            int itemQty = Database.itemTransactionExist(currentBillNumber, productID);
+            if (itemQty == 0) {
+                System.out.println("item does not exist, PrevitemQty = " + itemQty);
                 Database.addItemTransaction(billID, productID, qty);
             }
 //            otherwise update item transaction qty
-            else{
-                System.out.println("item exists, PrevitemQty = "+ itemQty);
+            else {
+                System.out.println("item exists, PrevitemQty = " + itemQty);
                 int newQty = itemQty + qty;
                 Database.updateItemTransaction(currentBillNumber, productID, newQty);
             }
             refresh();
 
 
-        } catch (NullPointerException e){
+        } catch (NullPointerException e) {
             System.out.println("no selection");
         }
     }
 
     @FXML
-    public void deleteItemButtonClicked(){
+    public void deleteItemButtonClicked() {
 
-        try{
+        try {
             ItemTransactionCart selected = cartTable.getSelectionModel().getSelectedItem();
-            Database.deleteItemTransaction(selected.getProductID(),currentBillNumber);
+            Database.deleteItemTransaction(selected.getProductID(), currentBillNumber);
             refresh();
 
-        } catch (NullPointerException e){
+        } catch (NullPointerException e) {
             System.out.println("no selection");
         }
     }
 
     @FXML
-    public void checkOutButtonClicked(){
+    public void checkOutButtonClicked() throws IOException {
 //        System.out.println("checkOutButtonClicked");
         int billID = currentBillNumber;
         int cashierID = Database.getCashierID(username);
@@ -193,19 +207,26 @@ public class NewTransactionController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        refresh();
+//        refresh();
+        homeButtonClicked();
     }
 
-    public void homeButtonClicked(ActionEvent event) throws IOException {
+//<<<<<<<HEAD
+//
+//    public void homeButtonClicked(ActionEvent event) throws IOException {
+//=======
+    public void homeButtonClicked () throws IOException {
+
+//>>>>>>>9f d1ff001add57fa0f030576511badb3e9e03c5a
         FXMLLoader loader = new FXMLLoader();
 
         String fxml;
         String title;
 
-        if (role.equals("Cashier")){
+        if (role.equals("Cashier")) {
             fxml = "CashierHomePage.fxml";
             title = "Cashier Home Page";
-        } else{
+        } else {
             fxml = "AdminHomePage.fxml";
             title = "Admin Home Page";
         }
@@ -215,14 +236,14 @@ public class NewTransactionController implements Initializable {
         Parent AdminHomePageParent = loader.load();
         Stage stage = new Stage();
 
-        Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Stage currentStage = (Stage) homeButton.getScene().getWindow();
         currentStage.close();
 
         if (role.equals("Cashier")) {
             CashierHomeController controller = loader.getController();
             controller.passData(username, role);
-        }else{
-            AdminHomeController controller =loader.getController();
+        } else {
+            AdminHomeController controller = loader.getController();
             controller.passData(username, role);
         }
 
@@ -233,3 +254,4 @@ public class NewTransactionController implements Initializable {
         stage.show();
     }
 }
+//}

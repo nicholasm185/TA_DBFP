@@ -1,0 +1,45 @@
+DB Login
+When the program starts, login with your dbta.1ez.xyz credentials from the console (follow the prompt)
+
+App login
+Login to the application with the default admin credentials
+username: test
+password: test
+
+Admin page
+Accessible only when logged in as admin
+Log out -> go back to login page
+Manage Products -> go to manage product page
+Manage User -> go to manage users page
+Manage Transaction History -> go to manage transaction page
+New Transaction -> make a new transaction
+
+Cashier Page
+Only seen by Cashier
+Log Out -> goes back to login page
+New Bill -> goes to New Transaction page
+
+Manage Products
+Home -> go back to admin page
+Add Product -> prompts new page to insert new product
+Delete Product -> *select a product from the table before clicking* deletes a product
+Edit Product -> *select a product from the table before clicking* prompts a new page to edit a product
+
+Manage User
+Home -> go back to admin page
+New User -> prompts new page to insert new user
+Edit User -> *select a user from the table before clicking* prompts a new page to edit a user's data *requires user's old password*
+Delete User -> *select a user from the table before clicking* deletes the user from db
+
+Manage Transaction
+Shows bills from a range of dates, can be filtered with start and end dates and by store location
+Home -> Return to admin page
+See Items Transaction -> opens a new page that shows what items are in the bill
+Delete Bill -> *select a bill from the table before clicking* deletes the bill from db
+Edit Bill -> *select a user from the table before clicking* prompts a menu that allows editing of a bill's data
+
+New Transaction
+Shows two tables, one of available products and one of current products in the bill
+Add Item -> select a product from Inventory, and input quantity (default = 1) then press the add item button
+Delete Item -> select a product from cart then press Delete item to remove from DB
+Check out -> prompts a new page to enter bill details, when checked out goes back to either admin or cashier menu

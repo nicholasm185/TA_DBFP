@@ -1,21 +1,49 @@
 package sample;
 
+import com.mysql.jdbc.exceptions.jdbc4.CommunicationsException;
+import javafx.scene.control.Alert;
+
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Database {
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    static final String DB_URL = "jdbc:mysql://localhost/FoodHallDB";
-    static final String USER = "root";
-    static final String PASS = "";
+    static final String DB_URL = "jdbc:mysql://dbta.1ez.xyz/9_FoodHallDB?autoReconnect=true&useSSL=false";
+    static String USER = "root";
+    static String PASS = "";
     static Connection conn;
     static Statement stmt;
     static ResultSet rs;
+
+    public static void getCredentials(){
+        String usrnm;
+        String pass;
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("enter username");
+        usrnm = sc.nextLine();
+        System.out.println("enter pass");
+        pass = sc.nextLine();
+
+        USER = usrnm;
+        PASS = pass;
+    }
 
     public static void connect(){
         try {
             Class.forName(JDBC_DRIVER);
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
+        } catch (CommunicationsException e){
+            System.out.println("connection failed, check database status");
+
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Database Connection Error");
+            alert.setHeaderText("Could not connect to database");
+            alert.setContentText("Make sure the database is running");
+
+            alert.showAndWait();
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -24,8 +52,11 @@ public class Database {
     public static void close(){
         try{
             conn.close();
+            System.out.println("Connection successfully closed");
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (NullPointerException e){
+            System.out.println("Closing connection attempt failed");
         }
     }
 
@@ -217,7 +248,7 @@ public class Database {
 //    itemTransaction related functions
     public static void addItemTransaction(int billID, int productID , int qty){
 
-        String sql = "INSERT INTO itemTransaction (billID, productID, qty) VALUES ('%d','%d','%d')";
+        String sql = "INSERT INTO itemtransaction (billID, productID, qty) VALUES ('%d','%d','%d')";
         sql = String.format(sql, billID, productID, qty);
 
         executeSQL(sql);
@@ -246,7 +277,7 @@ public class Database {
 
     public static void updateItemTransaction(int billID, int productID, int newQty){
 
-        String sql = "UPDATE itemTransaction set qty = '%d' WHERE billID = '%d' AND productID = '%d'";
+        String sql = "UPDATE itemtransaction set qty = '%d' WHERE billID = '%d' AND productID = '%d'";
         sql = String.format(sql, newQty, billID,productID);
 
         executeSQL(sql);
@@ -288,7 +319,7 @@ public class Database {
             ResultSet rs = conn.createStatement().executeQuery(sql);
 
             while (rs.next()){
-                listofTypes.add(rs.getString("StoreName"));
+                listofTypes.add(rs.getString("StoreID") + " " + rs.getString("StoreName"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -460,7 +491,7 @@ public class Database {
 
         try {
 //            conn = connect();
-            String sql = "SELECT * FROM paymentType";
+            String sql = "SELECT * FROM paymenttype";
             ResultSet rs = conn.createStatement().executeQuery(sql);
 
             while (rs.next()){
